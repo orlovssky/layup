@@ -7,79 +7,81 @@ import './App.scss'
 const App = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
-    const canvas = document.querySelector('canvas')
-    const top = document.querySelector('div:nth-child(2)')
-    const context = canvas?.getContext('2d')
 
-    if (canvas && context) {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      const images: HTMLImageElement[] = []
-      const airpods = {
-        frame: 0,
-      }
+    const indexImages: string[] = []
 
-      for (let i = 0; i < 75; i++) {
-        if (i >= 25 && i <= 63) {
-          continue
+    for (let i = 1; i <= 370; i++) {
+      indexImages.push(i.toString())
+    }
+
+    const loadImages = () => {
+      return Promise.all(
+        indexImages.map((i) => import(`./assets/images/rocket/rocket_${i}.jpg`))
+      )
+    }
+
+    loadImages().then((loadedImages) => {
+      const canvas = document.querySelector('canvas')
+      const top = document.querySelector('.canvas')
+      const context = canvas?.getContext('2d')
+
+      if (canvas && context) {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        const images: HTMLImageElement[] = []
+        const airpods = {
+          frame: 0,
         }
 
-        const img = new Image()
-        img.src = `/src/assets/images/mountain/mountain_${i}.webp`
-        images.push(img)
+        for (const image of loadedImages) {
+          const img = new Image()
+          img.src = image.default
+          images.push(img)
+        }
+
+        const render = () => {
+          context.clearRect(0, 0, canvas.width, canvas.height)
+          context.drawImage(
+            images[airpods.frame],
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          )
+        }
+
+        gsap
+          .timeline({
+            onUpdate: render,
+            scrollTrigger: {
+              trigger: top,
+              scrub: 0.5,
+              end: '+=400',
+            },
+          })
+          .to(
+            airpods,
+            {
+              frame: 370 - 1,
+              snap: 'frame',
+              ease: 'none',
+              duration: 1,
+            },
+            0
+          )
+
+        ScrollTrigger.create({ trigger: 'canvas', end: '+=400' })
+        images[images.length - 1].onload = render
       }
-
-      console.log(images.length)
-
-      const render = () => {
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(
-          images[airpods.frame],
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        )
-      }
-
-      const remove = () => {
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(images[0], 0, 0)
-      }
-
-      gsap
-        .timeline({
-          onUpdate: render,
-          onComplete: remove,
-          scrollTrigger: {
-            trigger: top,
-            scrub: 0.5,
-          },
-        })
-        .to(
-          airpods,
-          {
-            frame: 36 - 1,
-            snap: 'frame',
-            ease: 'none',
-            duration: 0.1,
-          },
-          0
-        )
-
-      images[0].onload = render
-
-      ScrollTrigger.create({ trigger: 'canvas' })
-    }
+    })
   }, [])
 
   return (
     <>
       <div className="vh-100" />
-      <div className="vh-100" />
       <canvas />
-      <div className="vh-100">Лох</div>
-      {/*<div className="vh-100 bg-aquamarine">100vh</div>*/}
+      <div className="canvas" />
+      <div className="height-400" />
     </>
   )
 }
