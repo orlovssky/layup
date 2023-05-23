@@ -1,0 +1,5 @@
+$cursors-path: 'src/assets/cursors/';
+
+@mixin cursor($type) {
+  cursor: url($cursors-path + $type + '.svg'), auto;
+}
