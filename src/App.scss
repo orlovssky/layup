@@ -1,12 +1,20 @@
 @import 'src/assets/styles/mixins/cursors';
 
-html {
-  @include cursor('default')
+@media (prefers-color-scheme: light) {
+  html {
+    @include cursor('light', 'default')
+  }
+  button {
+    @include cursor('light', 'pointer')
+  }
 }
-button {
-  @include cursor('pointer')
+
+@media (prefers-color-scheme: dark) {
+  html {
+    @include cursor('dark', 'default')
+  }
+  button {
+    @include cursor('dark', 'pointer')
+  }
 }
-div {
-  font-family: sans-serif;
-  font-size: 5em;
-}
+
