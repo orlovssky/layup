@@ -20,6 +20,7 @@ interface Letter {
   value: string
   idle: string
   stretched: string
+  tween: gsap.core.Tween | null
 }
 
 const App = () => {
@@ -28,53 +29,74 @@ const App = () => {
     letters.map((letter) => ({
       ref: createRef<SVGPathElement>(),
       id: nanoid(),
+      tween: null,
       ...letter,
     }))
   )
-  const timelineRef = useRef<gsap.core.Timeline>(
-    gsap.timeline({ paused: true })
-  )
+
+  useEffect(() => {
+    for (const letter of lettersRef.current) {
+      letter.tween = gsap.fromTo(
+        letter.ref.current,
+        {
+          morphSVG: letter.idle,
+        },
+        {
+          morphSVG: letter.stretched,
+          ease: 'linear',
+          paused: true,
+        }
+      )
+    }
+  }, [])
 
   const handleMouseMove: MouseEventHandler = (event) => {
-    if (svgRef.current) {
-      const { left, right, width } = svgRef.current.getBoundingClientRect()
-      const center = left + width / 2
+    if (!svgRef.current) return
 
-      if (event.pageX > center) {
-        const positionToCenter = 1 - (event.pageX - center) / (right - center)
-        gsap.to(timelineRef.current, {
-          progress: positionToCenter.toFixed(2),
-          duration: 0.5,
-          overwrite: true,
-        })
-      } else if (event.pageX >= left) {
-        const positionToCenter = (event.pageX - left) / (center - left)
+    const { width: svgWidth } = svgRef.current.getBoundingClientRect()
 
-        gsap.to(timelineRef.current, {
-          progress: positionToCenter.toFixed(2),
-          duration: 0.5,
-          overwrite: true,
-        })
+    for (const { ref, tween } of lettersRef.current) {
+      if (ref.current && svgRef.current) {
+        const {
+          width: letterWidth,
+          left: letterLeft,
+          right: letterRight,
+        } = ref.current.getBoundingClientRect()
+        const width = letterWidth + svgWidth / 2
+        const left = letterLeft - svgWidth / 2 / 2
+        const right = letterRight + svgWidth / 2 / 2
+
+        const center = left + width / 2
+
+        if (event.pageX > center) {
+          const positionToCenter = 1 - (event.pageX - center) / (right - center)
+          gsap.to(tween, {
+            progress: positionToCenter.toFixed(2),
+            duration: 0.5,
+            overwrite: true,
+          })
+        } else if (event.pageX >= left) {
+          const positionToCenter = (event.pageX - left) / (center - left)
+
+          gsap.to(tween, {
+            progress: positionToCenter.toFixed(2),
+            duration: 0.5,
+            overwrite: true,
+          })
+        }
       }
     }
   }
 
-  useEffect(() => {
+  const handleMouseLeave = () => {
     for (const letter of lettersRef.current) {
-      if (letter.ref.current) {
-        timelineRef.current.fromTo(
-          letter.ref.current,
-          {
-            morphSVG: letter.idle,
-          },
-          {
-            morphSVG: letter.stretched,
-            ease: 'linear',
-          }
-        )
-      }
+      gsap.to(letter.tween, {
+        progress: 0,
+        duration: 0.5,
+        overwrite: true,
+      })
     }
-  }, [])
+  }
 
   return (
     <main>
@@ -86,6 +108,7 @@ const App = () => {
         viewBox="0 0 117 100"
         fill="none"
         onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
         {lettersRef.current.map((letter) => (
           <path key={letter.id} ref={letter.ref} d={letter.idle} fill="black" />
