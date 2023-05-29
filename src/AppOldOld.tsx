@@ -14,18 +14,17 @@ import './App.scss'
 
 gsap.registerPlugin(MorphSVGPlugin)
 
-interface LetterRef {
-  ref: RefObject<SVGPathElement>
-  id: string
-  value: string
-  idle: string
-  stretched: string
-}
-
 const App = () => {
-  const lettersSvgRef = useRef<SVGSVGElement>(null)
   const tl = useRef<gsap.core.Timeline>()
-  const lettersRef = useRef<LetterRef[]>(
+  const lettersRef = useRef<
+    {
+      ref: RefObject<SVGPathElement>
+      id: string
+      value: string
+      idle: string
+      stretched: string
+    }[]
+  >(
     letters.map((letter) => ({
       ref: createRef<SVGPathElement>(),
       id: nanoid(),
@@ -34,29 +33,7 @@ const App = () => {
   )
 
   const handleMouseMove: MouseEventHandler = (event) => {
-    if (lettersSvgRef.current && tl.current) {
-      const { left, right, width } =
-        lettersSvgRef.current.getBoundingClientRect()
-      const center = left + width / 2
-
-      if (event.pageX > center) {
-        const positionToCenter = 1 - (event.pageX - center) / (right - center)
-
-        gsap.to(tl.current, {
-          progress: positionToCenter.toFixed(2),
-          duration: 0.5,
-          overwrite: true,
-        })
-      } else if (event.pageX >= left) {
-        const positionToCenter = (event.pageX - left) / (center - left)
-
-        gsap.to(tl.current, {
-          progress: positionToCenter.toFixed(2),
-          duration: 0.5,
-          overwrite: true,
-        })
-      }
-    }
+    console.log(event)
   }
 
   useEffect(() => {
@@ -66,6 +43,9 @@ const App = () => {
 
     for (const letter of lettersRef.current) {
       if (tl.current && letter.ref.current) {
+        const { left, width } = letter.ref.current.getBoundingClientRect()
+
+        console.log(left, left + width)
         tl.current.fromTo(
           letter.ref.current,
           {
@@ -82,15 +62,15 @@ const App = () => {
 
   return (
     <svg
-      ref={lettersSvgRef}
       width="117"
       height="100"
       viewBox="0 0 117 100"
       fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       onMouseMove={handleMouseMove}
     >
-      {lettersRef.current.map((letter) => (
-        <path key={letter.id} ref={letter.ref} d={letter.idle} fill="black" />
+      {lettersRef.current.map(({ ref, id, idle }) => (
+        <path key={id} ref={ref} d={idle} fill="black" />
       ))}
     </svg>
   )
