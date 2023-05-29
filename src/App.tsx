@@ -2,55 +2,51 @@ import MorphSVGPlugin from 'gsap-trial/MorphSVGPlugin'
 import gsap from 'gsap-trial'
 import letters from 'letters'
 import { nanoid } from 'nanoid'
-import {
-  createRef,
-  MouseEventHandler,
-  RefObject,
-  useEffect,
-  useRef,
-} from 'react'
+import { createRef, MouseEvent, RefObject, useEffect, useRef } from 'react'
 
 import './App.scss'
 
 gsap.registerPlugin(MorphSVGPlugin)
 
-interface LetterRef {
-  ref: RefObject<SVGPathElement>
+interface Letter {
+  svgRef: RefObject<SVGSVGElement>
+  pathRef: RefObject<SVGPathElement>
   id: string
   value: string
   idle: string
   stretched: string
+  viewBox: string
 }
 
 const App = () => {
-  const lettersSvgRef = useRef<SVGSVGElement>(null)
-  const tl = useRef<gsap.core.Timeline>()
-  const lettersRef = useRef<LetterRef[]>(
+  const letterTimelinesRef = useRef<gsap.core.Timeline[]>([])
+  const lettersRef = useRef<Letter[]>(
     letters.map((letter) => ({
-      ref: createRef<SVGPathElement>(),
+      svgRef: createRef<SVGSVGElement>(),
+      pathRef: createRef<SVGPathElement>(),
       id: nanoid(),
       ...letter,
     }))
   )
 
-  const handleMouseMove: MouseEventHandler = (event) => {
-    if (lettersSvgRef.current && tl.current) {
+  const handleMouseMove = (
+    event: MouseEvent,
+    { letter, letterIndex }: { letter: Letter; letterIndex: number }
+  ) => {
+    if (letterTimelinesRef.current && letter.svgRef.current) {
       const { left, right, width } =
-        lettersSvgRef.current.getBoundingClientRect()
+        letter.svgRef.current.getBoundingClientRect()
       const center = left + width / 2
+      let positionToCenter
 
       if (event.pageX > center) {
-        const positionToCenter = 1 - (event.pageX - center) / (right - center)
-
-        gsap.to(tl.current, {
-          progress: positionToCenter.toFixed(2),
-          duration: 0.5,
-          overwrite: true,
-        })
+        positionToCenter = 1 - (event.pageX - center) / (right - center)
       } else if (event.pageX >= left) {
-        const positionToCenter = (event.pageX - left) / (center - left)
+        positionToCenter = (event.pageX - left) / (center - left)
+      }
 
-        gsap.to(tl.current, {
+      if (positionToCenter !== undefined) {
+        gsap.to(letterTimelinesRef.current[letterIndex], {
           progress: positionToCenter.toFixed(2),
           duration: 0.5,
           overwrite: true,
@@ -59,40 +55,60 @@ const App = () => {
     }
   }
 
-  useEffect(() => {
-    tl.current = gsap.timeline({
-      paused: true,
-    })
+  const handleMouseLeave = (
+    _: MouseEvent,
+    { letter, letterIndex }: { letter: Letter; letterIndex: number }
+  ) => {
+    if (letterTimelinesRef.current && letter.svgRef.current) {
+      gsap.to(letterTimelinesRef.current[letterIndex], {
+        progress: 0,
+        duration: 0.5,
+        overwrite: true,
+      })
+    }
+  }
 
+  useEffect(() => {
     for (const letter of lettersRef.current) {
-      if (tl.current && letter.ref.current) {
-        tl.current.fromTo(
-          letter.ref.current,
-          {
-            morphSVG: letter.idle,
-          },
-          {
-            morphSVG: letter.stretched,
-            ease: 'linear',
-          }
+      if (letterTimelinesRef.current && letter.pathRef.current) {
+        letterTimelinesRef.current.push(
+          gsap
+            .timeline({
+              paused: true,
+            })
+            .fromTo(
+              letter.pathRef.current,
+              {
+                morphSVG: letter.idle,
+              },
+              {
+                morphSVG: letter.stretched,
+                ease: 'linear',
+              }
+            )
         )
       }
     }
   }, [])
 
   return (
-    <svg
-      ref={lettersSvgRef}
-      width="117"
-      height="100"
-      viewBox="0 0 117 100"
-      fill="none"
-      onMouseMove={handleMouseMove}
-    >
-      {lettersRef.current.map((letter) => (
-        <path key={letter.id} ref={letter.ref} d={letter.idle} fill="black" />
+    <main>
+      {lettersRef.current.map((letter, letterIndex) => (
+        <svg
+          key={letter.id}
+          ref={letter.svgRef}
+          viewBox={letter.viewBox}
+          onMouseMove={(event) =>
+            handleMouseMove(event, { letter, letterIndex })
+          }
+          onMouseLeave={(event) =>
+            handleMouseLeave(event, { letter, letterIndex })
+          }
+        >
+          <path ref={letter.pathRef} d={letter.idle} fill="black" />
+        </svg>
       ))}
-    </svg>
+    </main>
   )
 }
 

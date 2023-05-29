@@ -18,3 +18,16 @@
   }
 }
 
+main {
+  display: flex;
+  justify-content: center;
+  padding: 0 30px;
+}
+main svg {
+  height: 100px;
+  width: auto;
+}
+main svg {
+  padding: 0 10px;
+}
+
