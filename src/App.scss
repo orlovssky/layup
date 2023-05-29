@@ -19,15 +19,11 @@
 }
 
 main {
-  display: flex;
-  justify-content: center;
-  padding: 0 30px;
+  text-align: center;
 }
-main svg {
-  height: 100px;
-  width: auto;
+svg {
+  width: 50vw;
+  height: auto;
+  padding: 0 10vw;
+  border: 1px solid black;
 }
-main svg {
-  padding: 0 10px;
-}
-
