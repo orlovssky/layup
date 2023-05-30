@@ -1,5 +1,6 @@
-import MorphSVGPlugin from 'gsap-trial/MorphSVGPlugin'
-import gsap from 'gsap-trial'
+import { MorphSVGPlugin } from 'gsap-trial/MorphSVGPlugin'
+import { ScrollTrigger } from 'gsap-trial/ScrollTrigger'
+import { gsap } from 'gsap-trial'
 import letters from 'letters'
 import { nanoid } from 'nanoid'
 import {
@@ -12,7 +13,7 @@ import {
 
 import './App.scss'
 
-gsap.registerPlugin(MorphSVGPlugin)
+gsap.registerPlugin(MorphSVGPlugin, ScrollTrigger)
 
 interface Letter {
   ref: RefObject<SVGPathElement>
@@ -25,6 +26,7 @@ interface Letter {
 
 const App = () => {
   const svgRef = useRef<SVGSVGElement>(null)
+  const divRef = useRef<HTMLDivElement>(null)
   const lettersRef = useRef<Letter[]>(
     letters.map((letter) => ({
       ref: createRef<SVGPathElement>(),
@@ -43,10 +45,21 @@ const App = () => {
         },
         {
           morphSVG: letter.stretched,
-          ease: 'linear',
           paused: true,
         }
       )
+    }
+
+    if (svgRef.current && divRef.current) {
+      gsap.to(svgRef.current, {
+        scrollTrigger: {
+          trigger: divRef.current,
+          end: '+=300',
+          scrub: 0.5,
+        },
+        width: 0,
+        opacity: 0,
+      })
     }
   }, [])
 
@@ -100,20 +113,30 @@ const App = () => {
 
   return (
     <main>
-      <svg
-        ref={svgRef}
-        xmlns="http://www.w3.org/2000/svg"
-        width="117"
-        height="100"
-        viewBox="0 0 117 100"
-        fill="none"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        {lettersRef.current.map((letter) => (
-          <path key={letter.id} ref={letter.ref} d={letter.idle} fill="black" />
-        ))}
-      </svg>
+      <div className="svg-container">
+        <svg
+          ref={svgRef}
+          xmlns="http://www.w3.org/2000/svg"
+          width="128"
+          height="100"
+          viewBox="0 0 128 100"
+          fill="none"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          {lettersRef.current.map((letter) => (
+            <path
+              key={letter.id}
+              ref={letter.ref}
+              d={letter.idle}
+              fill="black"
+            />
+          ))}
+        </svg>
+      </div>
+
+      <div className="bottom" />
+      <div ref={divRef} className="bottom" />
     </main>
   )
 }
