@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -27,7 +26,7 @@
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-arca": "^0.16.0",
-    "eslint-plugin-fsd-principles": "^1.1.1",
+    "eslint-plugin-fsd-principles": "^1.1.2",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",

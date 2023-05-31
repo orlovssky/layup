@@ -958,10 +958,10 @@ eslint-plugin-arca@^0.16.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-arca/-/eslint-plugin-arca-0.16.0.tgz#9e5dae90cbe7af9d2ad57491e5d045b3f3ec442b"
   integrity sha512-Gx0Rw06LfhF0mRXHiUmG+LxyRy4dYLGT49FiAp4yhFgGYF2Tq94CuWFjbwdenp8vw36K2WzbMPObU9FstjwfCQ==
 
-eslint-plugin-fsd-principles@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-fsd-principles/-/eslint-plugin-fsd-principles-1.1.1.tgz#31419a990fdd1529da51b496adfafadaae01bc3b"
-  integrity sha512-+QsIOF/Uw9VJGpnkvdQILc91FOI1HlBPn8frsThKcRVFzYCVqCGiNtteoS0NgSfBPBCxyE0+wLDRaRxbq21Hgw==
+eslint-plugin-fsd-principles@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-fsd-principles/-/eslint-plugin-fsd-principles-1.1.2.tgz#8f2ca03dc304f25cbcede4ecd6e5b666d19a6215"
+  integrity sha512-5EeqviHGGuAeFx7yM8B53v2F1BYzG7zrYd92doZvNcp/SUtWFM0n/YosMIqusLcjCssymKO485QjSvkpmb3i3g==
 
 eslint-plugin-prettier@^4.2.1:
   version "4.2.1"
