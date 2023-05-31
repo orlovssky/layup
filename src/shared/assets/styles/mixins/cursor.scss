@@ -1,0 +1,3 @@
+@mixin cursor($color-scheme, $type) {
+  cursor: url('src/shared/assets/icons/cursors/' + $color-scheme  + '/' + $type + '.svg'), auto;
+}

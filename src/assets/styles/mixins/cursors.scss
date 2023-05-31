@@ -1,3 +1,0 @@
-@mixin cursor($color-scheme, $type) {
-  cursor: url('src/assets/cursors/' + $color-scheme  + '/' + $type + '.svg'), auto;
-}

@@ -9,6 +9,7 @@
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:fsd-principles/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -31,6 +32,7 @@
     "arca"
   ],
   "rules": {
+    "react/self-closing-comp": ["error"],
     "react-refresh/only-export-components": "error",
     "prettier/prettier": "error",
     "arca/import-ordering": "error",
@@ -43,7 +45,6 @@
       { "blankLine": "always", "prev": "*", "next": "continue" },
       { "blankLine": "always", "prev": "*", "next": "return" },
       { "blankLine": "always", "prev": "*", "next": "export" }
-    ],
-    "react/self-closing-comp": ["error"]
+    ]
   }
 }

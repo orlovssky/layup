@@ -1,0 +1,13 @@
+.letters {
+  text-align: center;
+
+  &__container {
+    width: 50vw;
+    height: auto;
+    padding: 0 10vw;
+  }
+
+  &__item {
+    fill: black;
+  }
+}

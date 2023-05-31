@@ -1,0 +1,13 @@
+@import 'src/shared/assets/styles/mixins/cursor';
+
+@media (prefers-color-scheme: light) {
+  html {
+    @include cursor('dark', 'default')
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    @include cursor('dark', 'default')
+  }
+}
