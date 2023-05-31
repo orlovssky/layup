@@ -18,25 +18,16 @@
   }
 }
 
-.svg-container {
-  position: fixed;
-  top: 0;
-  z-index: 2;
+.letters {
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-}
-svg {
-  width: 50vw;
-  height: auto;
-  padding: 0 10vw;
-  margin-bottom: 20vh;
-}
-.bottom {
-  width: auto;
-  height: 200vh;
-  //background-color: blanchedalmond;
+
+  &__container {
+    width: 60vw;
+    height: auto;
+    padding: 0 10vw;
+  }
+
+  &__item {
+    fill: black;
+  }
 }

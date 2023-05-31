@@ -1,5 +1,4 @@
 import { MorphSVGPlugin } from 'gsap-trial/MorphSVGPlugin'
-import { ScrollTrigger } from 'gsap-trial/ScrollTrigger'
 import { gsap } from 'gsap-trial'
 import letters from 'letters'
 import { nanoid } from 'nanoid'
@@ -13,7 +12,7 @@ import {
 
 import './App.scss'
 
-gsap.registerPlugin(MorphSVGPlugin, ScrollTrigger)
+gsap.registerPlugin(MorphSVGPlugin)
 
 interface Letter {
   ref: RefObject<SVGPathElement>
@@ -26,7 +25,6 @@ interface Letter {
 
 const App = () => {
   const svgRef = useRef<SVGSVGElement>(null)
-  const divRef = useRef<HTMLDivElement>(null)
   const lettersRef = useRef<Letter[]>(
     letters.map((letter) => ({
       ref: createRef<SVGPathElement>(),
@@ -48,18 +46,6 @@ const App = () => {
           paused: true,
         }
       )
-    }
-
-    if (svgRef.current && divRef.current) {
-      gsap.to(svgRef.current, {
-        scrollTrigger: {
-          trigger: divRef.current,
-          end: '+=300',
-          scrub: 0.5,
-        },
-        width: 0,
-        opacity: 0,
-      })
     }
   }, [])
 
@@ -113,7 +99,7 @@ const App = () => {
 
   return (
     <main>
-      <div className="svg-container">
+      <div className="letters">
         <svg
           ref={svgRef}
           xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +107,7 @@ const App = () => {
           height="100"
           viewBox="0 0 128 100"
           fill="none"
+          className="letters__container"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
@@ -129,14 +116,11 @@ const App = () => {
               key={letter.id}
               ref={letter.ref}
               d={letter.idle}
-              fill="black"
+              className="letters__item"
             />
           ))}
         </svg>
       </div>
-
-      <div className="bottom" />
-      <div ref={divRef} className="bottom" />
     </main>
   )
 }
