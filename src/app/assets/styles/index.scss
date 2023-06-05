@@ -1,13 +1,7 @@
+@use "src/shared/assets/styles/variables/colors";
 @import 'src/shared/assets/styles/mixins/cursor';
 
-@media (prefers-color-scheme: light) {
-  html {
-    @include cursor('dark', 'default')
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    @include cursor('dark', 'default')
-  }
+html {
+  @include cursor('default');
+  background-color: colors.$light;
 }
