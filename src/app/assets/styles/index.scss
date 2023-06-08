@@ -1,7 +1,0 @@
-@use "src/shared/assets/styles/variables/colors";
-@import 'src/shared/assets/styles/mixins/cursor';
-
-html {
-  @include cursor('default');
-  background-color: colors.$light;
-}

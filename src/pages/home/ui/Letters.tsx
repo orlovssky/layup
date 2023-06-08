@@ -9,8 +9,8 @@ import {
   useEffect,
 } from 'react'
 
+import lettersClasses from '../assets/styles/letters.module.css'
 import letters from '../lib/static/letters'
-import '../assets/styles/index.scss'
 
 gsap.registerPlugin(MorphSVGPlugin)
 
@@ -69,6 +69,7 @@ const Letters = () => {
 
         if (event.pageX > center) {
           const positionToCenter = 1 - (event.pageX - center) / (right - center)
+
           gsap.to(tween, {
             progress: positionToCenter.toFixed(2),
             duration: 0.5,
@@ -98,7 +99,7 @@ const Letters = () => {
   }
 
   return (
-    <div className="letters">
+    <div className={lettersClasses.container}>
       <svg
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +107,7 @@ const Letters = () => {
         height="100"
         viewBox="0 0 128 100"
         fill="none"
-        className="letters__container"
+        className={lettersClasses.letters}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -115,7 +116,7 @@ const Letters = () => {
             key={letter.id}
             ref={letter.ref}
             d={letter.idle}
-            className="letters__item"
+            className={lettersClasses.letter}
           />
         ))}
       </svg>

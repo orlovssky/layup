@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+}
+
+.letters {
+  cursor: url('../icons/jordan.svg'), auto;
+
+  width: 50vw;
+  height: auto;
+  padding: 0 10vw;
+
+  font-size: 1em;
+}
+
+.letter {
+  fill: rgb(var(--color-primary));
+}
