@@ -7,63 +7,68 @@ import blinkingAnchorClasses from '../assets/styles/blinkingAnchor.module.css'
 const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
   const anchorRef = useRef<HTMLAnchorElement>(null)
   const lettersRef = useRef(
-    [...text].map((letter) => ({
-      id: nanoid(),
-      letter,
-    }))
+    [...text].map((letter) => ({ id: nanoid(), letter: letter }))
   )
-  const delaysRef = useRef<number[]>([])
-  const repeatsRef = useRef<number[]>([])
-  const timeline = useRef(gsap.timeline({ paused: true }))
+  const lastDelaysRef = useRef<number[]>([])
+  const lastRepeatsRef = useRef<number[]>([])
+  const timelineRef = useRef(gsap.timeline({ paused: true }))
 
   const handleMouseEnter = () => {
-    timeline.current.restart()
+    timelineRef.current.restart()
   }
 
   useEffect(() => {
     const getDelay = (): number => {
-      const delay = +(Math.random() * 0.8).toFixed(1)
+      const min = 0
+      const max = 0.6
+      let delay = +(min + Math.random() * (max - min)).toFixed(1)
 
-      if (delaysRef.current.includes(delay)) {
-        return getDelay()
-      } else {
-        delaysRef.current.push(delay)
-
-        return delay
+      if (lastDelaysRef.current.length === 3) {
+        lastDelaysRef.current = []
       }
+
+      if (lastDelaysRef.current.includes(delay)) {
+        delay += 0.1
+      }
+
+      lastDelaysRef.current.push(delay)
+
+      return delay
     }
 
-    const getRepeat = (): number => {
-      const randomDigit = Math.floor(Math.random() * (6 - 1 + 1)) + 1
-      const repeat = randomDigit % 2 == 0 ? randomDigit + 1 : randomDigit
+    const getOddRepeat = (): number => {
+      const min = 2
+      const max = 5
+      const randomInt = Math.floor(min + Math.random() * (max - min + 1))
+      let repeatOdd = randomInt % 2 === 0 ? randomInt - 1 : randomInt
 
-      if (repeatsRef.current.includes(repeat)) {
-        return getRepeat()
-      } else {
-        repeatsRef.current.push(repeat)
-
-        return repeat
+      if (lastRepeatsRef.current.length === 3) {
+        lastRepeatsRef.current = []
       }
-    }
 
-    delaysRef.current = []
-    repeatsRef.current = []
+      if (lastRepeatsRef.current.includes(repeatOdd)) {
+        repeatOdd = repeatOdd === 5 ? 3 : repeatOdd + 2
+      }
+
+      lastRepeatsRef.current.push(repeatOdd)
+
+      return repeatOdd
+    }
 
     if (anchorRef.current) {
       gsap.utils
         .toArray<HTMLSpanElement>(anchorRef.current.children)
         .forEach((child) => {
-          timeline.current.fromTo(
+          timelineRef.current.fromTo(
             child,
             {
               opacity: 1,
             },
             {
-              opacity: 0.2,
+              opacity: 0.15,
               duration: 0.2,
-              ease: 'power',
               yoyo: true,
-              repeat: getRepeat(),
+              repeat: getOddRepeat(),
               delay: getDelay(),
             },
             0

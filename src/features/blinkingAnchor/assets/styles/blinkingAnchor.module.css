@@ -5,5 +5,18 @@
   color: rgb(var(--color-light));
   text-decoration: none;
 
+  background-color: rgb(var(--color-primary));
+
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  transition-duration: 1s;
+  transition-property: background-color;
+}
+
+body:hover .anchor {
   background-color: rgb(var(--color-secondary));
 }
+
+body .anchor:hover {
+  background-color: rgb(var(--color-primary));
+}
+

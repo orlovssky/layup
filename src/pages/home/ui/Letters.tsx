@@ -92,7 +92,7 @@ const Letters = () => {
     for (const letter of lettersRef.current) {
       gsap.to(letter.tween, {
         progress: 0,
-        duration: 0.5,
+        duration: 0.2,
         overwrite: true,
       })
     }
