@@ -3,12 +3,22 @@
   --cursor-pointer: url('../icons/cursors/pointer.svg'), auto;
   --color-light: 236, 248, 249;
   --color-primary: 229, 88, 7;
+  --color-primary-light: 248, 108, 27;
+  --color-primary-lighter: 249, 132, 65;
+  --color-primary-dark: 191, 73, 6;
+  --color-primary-darker: 153, 59, 5;
   --color-secondary: 6, 141, 169;
-  --color-secondary-dark: 	5, 109, 131;
+  --color-secondary-light: 	7, 173, 207;
+  --color-secondary-lighter: 9, 204, 245;
+  --color-secondary-dark: 5, 109, 131;
   --color-secondary-darker: 3, 78, 93;
 
   cursor: var(--cursor-default);
   background-color: rgb(var(--color-light));
+}
+
+a {
+  cursor: var(--cursor-pointer);
 }
 
 body::-webkit-scrollbar {
@@ -16,24 +26,24 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background-color: rgb(var(--color-secondary));
-}
-
-body::-webkit-scrollbar-track:hover {
   background-color: rgb(var(--color-primary));
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-primary));
+  background-color: rgb(var(--color-secondary));
   background-clip: content-box;
   border: 5px solid transparent;
-  border-radius: 10px;
 }
 
-body::-webkit-scrollbar-thumb:hover {
+body:hover::-webkit-scrollbar-track {
   background-color: rgb(var(--color-secondary));
+}
+
+body:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-primary));
 }
 
 body::-webkit-scrollbar-thumb:active {
   background-color: rgb(var(--color-secondary-dark));
 }
+

@@ -36,7 +36,7 @@ const ScrollSequence = () => {
           snap: 'frame',
           ease: 'none',
           scrollTrigger: {
-            end: 500,
+            end: 800,
             scrub: 0.5,
           },
           onUpdate: () => {

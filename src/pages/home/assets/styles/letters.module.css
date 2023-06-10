@@ -13,5 +13,5 @@
 }
 
 .letter {
-  fill: rgb(var(--color-primary));
+  fill: rgb(var(--color-secondary));
 }
