@@ -10,7 +10,10 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
   const timelineRef = useRef(gsap.timeline({ paused: true }))
   const anchorRef = useRef<HTMLAnchorElement>(null)
   const lettersRef = useRef(
-    [...text].map((letter) => ({ id: nanoid(), letter: letter }))
+    [...text].map((letter) => ({
+      id: nanoid(),
+      letter,
+    }))
   )
 
   const handleMouseEnter = () => {

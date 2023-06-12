@@ -1,27 +1,13 @@
 import { MorphSVGPlugin } from 'gsap-trial/MorphSVGPlugin'
 import { gsap } from 'gsap-trial'
 import { nanoid } from 'nanoid'
-import {
-  createRef,
-  MouseEventHandler,
-  RefObject,
-  useRef,
-  useEffect,
-} from 'react'
+import { createRef, MouseEventHandler, useRef, useEffect } from 'react'
 
 import lettersClasses from '../assets/styles/letters.module.css'
 import letters from '../lib/static/letters'
+import { Letter } from '../lib/typings/letters'
 
 gsap.registerPlugin(MorphSVGPlugin)
-
-interface Letter {
-  ref: RefObject<SVGPathElement>
-  id: string
-  value: string
-  idle: string
-  stretched: string
-  tween: gsap.core.Tween | null
-}
 
 const Letters = () => {
   const svgRef = useRef<SVGSVGElement>(null)
@@ -33,25 +19,6 @@ const Letters = () => {
       ...letter,
     }))
   )
-
-  useEffect(() => {
-    const gsapContext = gsap.context(() => {
-      for (const letter of lettersRef.current) {
-        letter.tween = gsap.fromTo(
-          letter.ref.current,
-          {
-            morphSVG: letter.idle,
-          },
-          {
-            morphSVG: letter.stretched,
-            paused: true,
-          }
-        )
-      }
-    }, svgRef)
-
-    return () => gsapContext.kill()
-  }, [])
 
   const handleMouseMove: MouseEventHandler = (event) => {
     if (!svgRef.current) return
@@ -101,6 +68,25 @@ const Letters = () => {
       })
     }
   }
+
+  useEffect(() => {
+    const gsapContext = gsap.context(() => {
+      for (const letter of lettersRef.current) {
+        letter.tween = gsap.fromTo(
+          letter.ref.current,
+          {
+            morphSVG: letter.idle,
+          },
+          {
+            morphSVG: letter.stretched,
+            paused: true,
+          }
+        )
+      }
+    }, svgRef)
+
+    return () => gsapContext.kill()
+  }, [])
 
   return (
     <div className={lettersClasses.container}>
