@@ -7,11 +7,11 @@ import makeGetDelay from '../lib/utils/makeGetDelay'
 import makeGetOddRepeat from '../lib/utils/makeGetOddRepeat'
 
 const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
+  const timelineRef = useRef(gsap.timeline({ paused: true }))
   const anchorRef = useRef<HTMLAnchorElement>(null)
   const lettersRef = useRef(
-    [...text, ...text].map((letter) => ({ id: nanoid(), letter: letter }))
+    [...text].map((letter) => ({ id: nanoid(), letter: letter }))
   )
-  const timelineRef = useRef(gsap.timeline({ paused: true }))
 
   const handleMouseEnter = () => {
     timelineRef.current.restart()
@@ -28,9 +28,7 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
           .forEach((child) => {
             timelineRef.current.fromTo(
               child,
-              {
-                opacity: 1,
-              },
+              { opacity: 1 },
               {
                 opacity: 0.15,
                 duration: 0.2,

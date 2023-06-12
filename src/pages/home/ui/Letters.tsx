@@ -35,18 +35,22 @@ const Letters = () => {
   )
 
   useEffect(() => {
-    for (const letter of lettersRef.current) {
-      letter.tween = gsap.fromTo(
-        letter.ref.current,
-        {
-          morphSVG: letter.idle,
-        },
-        {
-          morphSVG: letter.stretched,
-          paused: true,
-        }
-      )
-    }
+    const gsapContext = gsap.context(() => {
+      for (const letter of lettersRef.current) {
+        letter.tween = gsap.fromTo(
+          letter.ref.current,
+          {
+            morphSVG: letter.idle,
+          },
+          {
+            morphSVG: letter.stretched,
+            paused: true,
+          }
+        )
+      }
+    }, svgRef)
+
+    return () => gsapContext.kill()
   }, [])
 
   const handleMouseMove: MouseEventHandler = (event) => {
