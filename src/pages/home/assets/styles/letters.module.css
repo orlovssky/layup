@@ -1,11 +1,16 @@
 .container {
   text-align: center;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  width: 100vw;
 }
 
 .letters {
   cursor: url('../icons/jordan.svg'), auto;
 
-  width: 50vw;
+  width: 50%;
   height: auto;
   padding: 0 10vw;
 

@@ -6,19 +6,13 @@ import blinkingAnchorClasses from '../assets/styles/blinkingAnchor.module.css'
 import makeGetDelay from '../lib/utils/makeGetDelay'
 import makeGetOddRepeat from '../lib/utils/makeGetOddRepeat'
 
-const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
-  const timelineRef = useRef(gsap.timeline({ paused: true }))
-  const anchorRef = useRef<HTMLAnchorElement>(null)
-  const lettersRef = useRef(
-    [...text].map((letter) => ({
-      id: nanoid(),
-      letter,
-    }))
-  )
+const handleLetter = (letter: string) => ({ id: nanoid(), letter })
 
-  const handleMouseEnter = () => {
-    timelineRef.current.restart()
-  }
+const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
+  const anchorRef = useRef<HTMLAnchorElement>(null)
+  const lettersRef = useRef([...text].map(handleLetter))
+  const timelineRef = useRef(gsap.timeline({ paused: true }))
+  const handleMouseEnter = () => timelineRef.current.restart()
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {

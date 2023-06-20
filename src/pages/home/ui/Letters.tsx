@@ -10,6 +10,17 @@ import { Letter } from '../lib/typings/letters'
 gsap.registerPlugin(MorphSVGPlugin)
 
 const Letters = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const containerTweenRef = useRef<gsap.core.Tween | null>(null)
+  const containerAnimationRef = useRef<{
+    animated: boolean
+    direction: 'down' | 'up' | null
+    initiated: boolean
+  }>({
+    animated: false,
+    direction: null,
+    initiated: false,
+  })
   const svgRef = useRef<SVGSVGElement>(null)
   const lettersRef = useRef<Letter[]>(
     letters.map((letter) => ({
@@ -71,6 +82,18 @@ const Letters = () => {
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
+      containerTweenRef.current = gsap.to(containerRef.current, {
+        width: 0,
+        paused: true,
+        onComplete: () => {
+          console.log('asdas')
+          containerAnimationRef.current = {
+            ...containerAnimationRef.current,
+            animated: false,
+          }
+        },
+      })
+
       for (const letter of lettersRef.current) {
         letter.tween = gsap.fromTo(
           letter.ref.current,
@@ -83,13 +106,48 @@ const Letters = () => {
           }
         )
       }
-    }, svgRef)
+    }, containerRef)
 
-    return () => gsapContext.kill()
+    const handleScroll = () => {
+      const { top } = document.body.getBoundingClientRect()
+      const { animated, direction, initiated } = containerAnimationRef.current
+      console.log('==================')
+      console.log(top)
+      console.log(animated)
+      console.log(direction)
+      console.log('==================')
+
+      if (top < -30) {
+        if (!animated && [null, 'down'].includes(direction)) {
+          containerAnimationRef.current = {
+            animated: true,
+            direction: 'up',
+            initiated: true,
+          }
+          containerTweenRef.current?.restart()
+        }
+      } else {
+        if (initiated && !animated && [null, 'up'].includes(direction)) {
+          containerAnimationRef.current = {
+            ...containerAnimationRef.current,
+            animated: true,
+            direction: 'down',
+          }
+          containerTweenRef.current?.reverse()
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      gsapContext.kill()
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
-    <div className={lettersClasses.container}>
+    <div ref={containerRef} className={lettersClasses.container}>
       <svg
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"

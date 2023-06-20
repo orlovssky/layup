@@ -8,8 +8,6 @@ export default (...values: number[]): (() => number) => {
     idle.push(tick)
   }
 
-  console.log(idle)
-
   let usable: number[] = [...idle]
 
   return () => {
