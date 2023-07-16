@@ -1,23 +1,26 @@
-export default (...values: number[]): (() => number) => {
-  const max = Math.max(...values)
-  let tick = Math.min(...values)
-  const idle: number[] = [tick]
+export default (x: number, y: number, tick = 0.1): (() => number) => {
+  const minDelay = Math.min(x, y)
+  const maxDelay = Math.max(x, y)
+  const delays: number[] = [minDelay]
 
-  while (idle[idle.length - 1] < max) {
-    tick = +(tick + 0.1).toFixed(1)
-    idle.push(tick)
+  while (delays[delays.length - 1] <= maxDelay) {
+    delays.push(+(delays[delays.length - 1] + tick).toFixed(1))
   }
 
-  let usable: number[] = [...idle]
+  let filterableDelays: number[] = [...delays]
 
   return () => {
-    if (!usable.length) {
-      usable = [...usable]
+    if (!filterableDelays.length) {
+      filterableDelays = [...delays]
     }
 
-    const delay = usable[Math.floor(Math.random() * usable.length)]
-    usable = usable.filter((delayUsable) => delayUsable !== delay)
+    const randomIndex = Math.floor(Math.random() * filterableDelays.length)
+    const randomDelay = filterableDelays[randomIndex]
 
-    return delay
+    filterableDelays = filterableDelays.filter(
+      (filterableDelay) => filterableDelay !== randomDelay
+    )
+
+    return randomDelay
   }
 }

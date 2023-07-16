@@ -6,13 +6,15 @@ import blinkingAnchorClasses from '../assets/styles/blinkingAnchor.module.css'
 import makeGetDelay from '../lib/utils/makeGetDelay'
 import makeGetOddRepeat from '../lib/utils/makeGetOddRepeat'
 
-const handleLetter = (letter: string) => ({ id: nanoid(), letter })
-
 const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
   const anchorRef = useRef<HTMLAnchorElement>(null)
-  const lettersRef = useRef([...text].map(handleLetter))
   const timelineRef = useRef(gsap.timeline({ paused: true }))
-  const handleMouseEnter = () => timelineRef.current.restart()
+  const lettersRef = useRef(
+    [...text].map((letter, letterIndex) => ({
+      id: `${nanoid()}-${-letterIndex}`,
+      letter,
+    }))
+  )
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
@@ -25,7 +27,9 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
           .forEach((child) => {
             timelineRef.current.fromTo(
               child,
-              { opacity: 1 },
+              {
+                opacity: 1,
+              },
               {
                 opacity: 0.15,
                 duration: 0.2,
@@ -39,7 +43,9 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
       }
     }, anchorRef)
 
-    return () => gsapContext.kill()
+    return () => {
+      gsapContext.kill()
+    }
   }, [])
 
   return (
@@ -49,7 +55,9 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
       target="_blank"
       rel="noreferrer"
       className={blinkingAnchorClasses.anchor}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={() => {
+        timelineRef.current.restart()
+      }}
     >
       {lettersRef.current.map(({ id, letter }) => (
         <span key={id}>{letter}</span>

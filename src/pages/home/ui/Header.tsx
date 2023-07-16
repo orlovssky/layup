@@ -1,7 +1,7 @@
 import BlinkingAnchor from 'features/blinkingAnchor'
 import { gsap } from 'gsap-trial'
 import { useEffect, useRef } from 'react'
-import { LogoIcon } from 'shared/assets'
+import { MainLogo } from 'shared/main'
 
 import headerClasses from '../assets/styles/header.module.css'
 
@@ -85,7 +85,7 @@ const Header = () => {
   return (
     <header ref={headerRef} className={headerClasses.header}>
       <BlinkingAnchor text="NBA" link="https://www.nba.com/" />
-      <LogoIcon className={headerClasses.logo} />
+      <MainLogo className={headerClasses.logo} />
       <BlinkingAnchor text="FIBA" link="https://www.fiba.basketball/" />
     </header>
   )

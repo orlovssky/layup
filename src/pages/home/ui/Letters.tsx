@@ -1,13 +1,19 @@
 import { MorphSVGPlugin } from 'gsap-trial/MorphSVGPlugin'
 import { gsap } from 'gsap-trial'
 import { nanoid } from 'nanoid'
-import { createRef, MouseEventHandler, useRef, useEffect } from 'react'
+import { MouseEventHandler, useRef, useEffect } from 'react'
 
 import lettersClasses from '../assets/styles/letters.module.css'
 import letters from '../lib/static/letters'
 import { Letter } from '../lib/typings/letters'
 
 gsap.registerPlugin(MorphSVGPlugin)
+
+const lettersList: Letter[] = letters.map((letter, letterIndex) => ({
+  id: `${nanoid()}-${letterIndex}`,
+  tween: null,
+  ...letter,
+}))
 
 const Letters = () => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -22,27 +28,22 @@ const Letters = () => {
     initiated: false,
   })
   const svgRef = useRef<SVGSVGElement>(null)
-  const lettersRef = useRef<Letter[]>(
-    letters.map((letter) => ({
-      ref: createRef<SVGPathElement>(),
-      id: nanoid(),
-      tween: null,
-      ...letter,
-    }))
-  )
+  const lettersMapRef = useRef(new Map())
 
   const handleMouseMove: MouseEventHandler = (event) => {
     if (!svgRef.current) return
 
     const { width: svgWidth } = svgRef.current.getBoundingClientRect()
 
-    for (const { ref, tween } of lettersRef.current) {
-      if (ref.current && svgRef.current) {
+    for (const { id, tween } of lettersList) {
+      const node = lettersMapRef.current.get(id)
+
+      if (node && svgRef.current) {
         const {
           width: letterWidth,
           left: letterLeft,
           right: letterRight,
-        } = ref.current.getBoundingClientRect()
+        } = node.getBoundingClientRect()
         const width = letterWidth + svgWidth / 2
         const left = letterLeft - svgWidth / 2 / 2
         const right = letterRight + svgWidth / 2 / 2
@@ -71,8 +72,8 @@ const Letters = () => {
   }
 
   const handleMouseLeave = () => {
-    for (const letter of lettersRef.current) {
-      gsap.to(letter.tween, {
+    for (const { tween } of lettersList) {
+      gsap.to(tween, {
         progress: 0,
         duration: 0.2,
         overwrite: true,
@@ -86,17 +87,15 @@ const Letters = () => {
         width: 0,
         paused: true,
         onComplete: () => {
-          console.log('asdas')
-          containerAnimationRef.current = {
-            ...containerAnimationRef.current,
-            animated: false,
-          }
+          containerAnimationRef.current.animated = false
         },
       })
 
-      for (const letter of lettersRef.current) {
+      for (const letter of lettersList) {
+        const node = lettersMapRef.current.get(letter.id)
+
         letter.tween = gsap.fromTo(
-          letter.ref.current,
+          node,
           {
             morphSVG: letter.idle,
           },
@@ -108,41 +107,8 @@ const Letters = () => {
       }
     }, containerRef)
 
-    const handleScroll = () => {
-      const { top } = document.body.getBoundingClientRect()
-      const { animated, direction, initiated } = containerAnimationRef.current
-      console.log('==================')
-      console.log(top)
-      console.log(animated)
-      console.log(direction)
-      console.log('==================')
-
-      if (top < -30) {
-        if (!animated && [null, 'down'].includes(direction)) {
-          containerAnimationRef.current = {
-            animated: true,
-            direction: 'up',
-            initiated: true,
-          }
-          containerTweenRef.current?.restart()
-        }
-      } else {
-        if (initiated && !animated && [null, 'up'].includes(direction)) {
-          containerAnimationRef.current = {
-            ...containerAnimationRef.current,
-            animated: true,
-            direction: 'down',
-          }
-          containerTweenRef.current?.reverse()
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-
     return () => {
       gsapContext.kill()
-      window.removeEventListener('scroll', handleScroll)
     }
   }, [])
 
@@ -159,10 +125,16 @@ const Letters = () => {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {lettersRef.current.map((letter) => (
+        {lettersList.map((letter) => (
           <path
             key={letter.id}
-            ref={letter.ref}
+            ref={(node) => {
+              if (node) {
+                lettersMapRef.current.set(letter.id, node)
+              } else {
+                lettersMapRef.current.delete(letter.id)
+              }
+            }}
             d={letter.idle}
             className={lettersClasses.letter}
           />
