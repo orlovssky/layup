@@ -5,3 +5,8 @@ export interface Letter {
   stretched: string
   tween: GSAPTween | null
 }
+
+export interface LettersRef {
+  map: Map<string, SVGPathElement>
+  list: Letter[]
+}

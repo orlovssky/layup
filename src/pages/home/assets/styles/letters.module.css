@@ -1,4 +1,5 @@
 .container {
+  scale: 0;
   position: fixed;
   top: 90px;
   right: 0;

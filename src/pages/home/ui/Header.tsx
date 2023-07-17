@@ -4,74 +4,49 @@ import { useEffect, useRef } from 'react'
 import { MainLogo } from 'shared/main'
 
 import headerClasses from '../assets/styles/header.module.css'
+import { Animation } from '../lib/typings/header'
 
 const Header = () => {
-  const headerRef = useRef<HTMLHeadingElement>(null)
-  const headerUpTweenRef = useRef<gsap.core.Tween | null>(null)
-  const headerDownTweenRef = useRef<gsap.core.Tween | null>(null)
-  const headerAnimationRef = useRef<{
-    animated: boolean
-    direction: 'down' | 'up' | null
-  }>({
-    animated: false,
-    direction: null,
+  const headerRef = useRef<HTMLElement>(null)
+  const animationRef = useRef<Animation>({
+    tween: null,
+    scrollPosition: 0,
+    animationStarted: false,
   })
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
-      if (headerRef.current) {
-        headerUpTweenRef.current = gsap.to(headerRef.current, {
-          top: -100,
-          duration: 0.5,
-          ease: 'back.in',
-          paused: true,
-          onComplete: () => {
-            headerAnimationRef.current = {
-              ...headerAnimationRef.current,
-              animated: false,
-            }
-          },
-        })
-        headerDownTweenRef.current = gsap.to(headerRef.current, {
-          top: 0,
-          duration: 0.5,
-          ease: 'back.out',
-          paused: true,
-          onComplete: () => {
-            headerAnimationRef.current = {
-              ...headerAnimationRef.current,
-              animated: false,
-            }
-          },
-        })
-      }
+      animationRef.current.tween = gsap.to(headerRef.current, {
+        top: 0,
+        duration: 0.5,
+        ease: 'back.out',
+        paused: document.body.getBoundingClientRect().top !== 0,
+        onStart: () => {
+          animationRef.current.animationStarted = true
+        },
+      })
     }, headerRef)
 
-    let scrollPosition = 0
+    const handleScroll: EventListener = () => {
+      if (!animationRef.current.tween) {
+        return
+      }
 
-    const handleScroll = () => {
       const { top } = document.body.getBoundingClientRect()
-      const { animated, direction } = headerAnimationRef.current
+      const up = top > animationRef.current.scrollPosition
 
-      if (top > scrollPosition) {
-        if (!animated && [null, 'down'].includes(direction)) {
-          headerAnimationRef.current = {
-            animated: true,
-            direction: 'up',
-          }
-          headerDownTweenRef.current?.restart()
+      if (up) {
+        if (!animationRef.current.animationStarted) {
+          animationRef.current.tween.restart()
         }
       } else {
-        if (!animated && [null, 'up'].includes(direction)) {
-          headerAnimationRef.current = {
-            animated: true,
-            direction: 'down',
-          }
-          headerUpTweenRef.current?.restart()
+        if (!animationRef.current.tween.reversed()) {
+          animationRef.current.animationStarted = false
+          animationRef.current.tween.reverse()
         }
       }
 
-      scrollPosition = top
+      animationRef.current.scrollPosition = top
     }
 
     window.addEventListener('scroll', handleScroll)

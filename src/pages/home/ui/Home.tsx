@@ -8,16 +8,6 @@ const Home = () => {
       <Header />
       <Letters />
       <ScrollSequence />
-      <div
-        style={{
-          height: '100vh',
-        }}
-      />
-      <div
-        style={{
-          height: 6000,
-        }}
-      />
     </main>
   )
 }

@@ -4,65 +4,64 @@ import { useEffect, useRef } from 'react'
 
 import scrollSequenceClasses from '../assets/styles/scrollSequence.module.css'
 
-const framesCount = 42
 gsap.registerPlugin(ScrollTrigger)
 
 const ScrollSequence = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const framesCountRef = useRef(42)
 
   useEffect(() => {
-    const gsapContext = gsap.context(() => {
-      Promise.all(
-        Array.from(Array(framesCount)).map(
-          (_, index) => import(`../assets/images/kobe/kobe_${index}.png`)
-        )
-      ).then((importedImages) => {
-        const canvasContext = canvasRef.current?.getContext('2d')
+    Promise.all(
+      Array.from(Array(framesCountRef.current)).map(
+        (_, index) => import(`../assets/images/kobe/kobe_${index}.png`)
+      )
+    ).then((importedImages) => {
+      const canvasContext = canvasRef.current?.getContext('2d')
 
-        if (canvasContext && canvasRef.current) {
-          const frames = { frame: 0 }
-          canvasRef.current.width = window.innerWidth
-          canvasRef.current.height = window.innerHeight
-          const images: HTMLImageElement[] = importedImages.map(
-            (importedImage) => {
-              const image = new Image()
-              image.src = importedImage.default
+      if (!canvasContext || !canvasRef.current) {
+        return
+      }
 
-              return image
-            }
-          )
+      canvasRef.current.width = window.innerWidth
+      canvasRef.current.height = window.innerHeight
+      const frames = { frame: 0 }
+      const images: HTMLImageElement[] = importedImages.map((importedImage) => {
+        const image = new Image()
+        image.src = importedImage.default
 
-          gsap.to(frames, {
-            frame: framesCount - 1,
-            snap: 'frame',
-            ease: 'none',
-            scrollTrigger: {
-              end: 800,
-              scrub: 0.5,
-            },
-            onUpdate: () => {
-              if (canvasRef.current) {
-                const { width, height } = canvasRef.current
-
-                canvasContext.clearRect(0, 0, width, height)
-                canvasContext.drawImage(
-                  images[frames.frame],
-                  0,
-                  0,
-                  width,
-                  height
-                )
-              }
-            },
-          })
-        }
+        return image
       })
-    }, canvasRef)
 
-    return () => gsapContext.kill()
+      const handleUpdate = () => {
+        if (canvasRef.current) {
+          const { width, height } = canvasRef.current
+
+          canvasContext.clearRect(0, 0, width, height)
+          canvasContext.drawImage(images[frames.frame], 0, 0, width, height)
+        }
+      }
+
+      gsap.to(frames, {
+        frame: framesCountRef.current - 1,
+        snap: 'frame',
+        ease: 'none',
+        scrollTrigger: {
+          end: 800,
+          scrub: 0.5,
+        },
+        onUpdate: handleUpdate,
+      })
+    })
   }, [])
 
-  return <canvas ref={canvasRef} className={scrollSequenceClasses.canvas} />
+  return (
+    <div ref={containerRef}>
+      <canvas ref={canvasRef} className={scrollSequenceClasses.canvas} />
+      <div style={{ height: '100vh' }} />
+      <div style={{ height: 6000 }} />
+    </div>
+  )
 }
 
 export default ScrollSequence

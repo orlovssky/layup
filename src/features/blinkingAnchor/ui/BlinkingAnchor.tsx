@@ -18,28 +18,25 @@ const BlinkingAnchor = ({ text, link }: { text: string; link: string }) => {
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
-      if (anchorRef.current) {
-        const getDelay = makeGetDelay(0, 0.8)
-        const getOddRepeat = makeGetOddRepeat(1, 7)
+      const getDelay = makeGetDelay(0, 0.8)
+      const getOddRepeat = makeGetOddRepeat(1, 7)
+      const children = gsap.utils.toArray<HTMLSpanElement>(
+        anchorRef.current?.children || null
+      )
 
-        gsap.utils
-          .toArray<HTMLSpanElement>(anchorRef.current.children)
-          .forEach((child) => {
-            timelineRef.current.fromTo(
-              child,
-              {
-                opacity: 1,
-              },
-              {
-                opacity: 0.15,
-                duration: 0.2,
-                yoyo: true,
-                repeat: getOddRepeat(),
-                delay: getDelay(),
-              },
-              0
-            )
-          })
+      for (const child of children) {
+        timelineRef.current.fromTo(
+          child,
+          { opacity: 1 },
+          {
+            opacity: 0.15,
+            duration: 0.2,
+            yoyo: true,
+            repeat: getOddRepeat(),
+            delay: getDelay(),
+          },
+          0
+        )
       }
     }, anchorRef)
 
