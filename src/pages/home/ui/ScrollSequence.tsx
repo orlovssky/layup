@@ -9,12 +9,13 @@ gsap.registerPlugin(ScrollTrigger)
 const ScrollSequence = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const framesCountRef = useRef(42)
+  const framesCountRef = useRef(55)
 
   useEffect(() => {
     Promise.all(
       Array.from(Array(framesCountRef.current)).map(
-        (_, index) => import(`../assets/images/kobe/kobe_${index}.png`)
+        (_, index) =>
+          import(`../assets/images/some/OFFF_Hero_landing_V3_${index}.webp`)
       )
     ).then((importedImages) => {
       const canvasContext = canvasRef.current?.getContext('2d')
@@ -47,7 +48,7 @@ const ScrollSequence = () => {
         snap: 'frame',
         ease: 'none',
         scrollTrigger: {
-          end: 800,
+          end: 2000,
           scrub: 0.5,
         },
         onUpdate: handleUpdate,
