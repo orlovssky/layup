@@ -1,13 +1,15 @@
 import Header from './Header'
 import Letters from './Letters'
-import ScrollSequence from './ScrollSequence'
 
 const Home = () => {
   return (
-    <main>
+    <main
+      style={{
+        minHeight: '200vh',
+      }}
+    >
       <Header />
       <Letters />
-      <ScrollSequence />
     </main>
   )
 }

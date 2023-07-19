@@ -114,7 +114,7 @@ const Letters = () => {
     window.addEventListener('scroll', handleScroll)
 
     return () => {
-      gsapContext.kill()
+      gsapContext.revert()
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
