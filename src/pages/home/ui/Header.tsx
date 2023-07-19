@@ -59,9 +59,13 @@ const Header = () => {
 
   return (
     <header ref={headerRef} className={headerClasses.header}>
-      <BlinkingAnchor text="NBA" link="https://www.nba.com/" />
+      <BlinkingAnchor text="NBA" link="https://www.nba.com/" blinkOnHover />
       <MainLogo className={headerClasses.logo} />
-      <BlinkingAnchor text="FIBA" link="https://www.fiba.basketball/" />
+      <BlinkingAnchor
+        text="FIBA"
+        link="https://www.fiba.basketball/"
+        blinkOnHover
+      />
     </header>
   )
 }
