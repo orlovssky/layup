@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import { useTranslation } from 'react-i18next'
 import {
   forwardRef,
   useRef,
@@ -11,6 +12,7 @@ import expandableMenuClasses from '../assets/styles/expandableMenu.module.css'
 import { ContainerRef, Props } from '../lib/typings/expandableMenu'
 
 const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
+  const { t } = useTranslation()
   const [isExpanded, setIsExpanded] = useState(true)
   const isMouseOverRef = useRef(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -19,6 +21,18 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
   useImperativeHandle(ref, () => ({
     current: containerRef.current,
   }))
+
+  let menuText = ''
+
+  for (const letter of [
+    ...[...t('common.menu')].map((i) => i + '&#x2007;'),
+    '&#9996;',
+    '&#x2007;',
+    ...[...t('common.menu')].map((i) => i + '&#x2007;'),
+    '&#9996;',
+  ]) {
+    menuText += letter
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -69,8 +83,11 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
               className={expandableMenuClasses.text}
               textLength={Math.PI * 25 * 2}
               href={`#${circlePathIDRef.current}`}
+              dangerouslySetInnerHTML={{
+                __html: menuText,
+              }}
             >
-              m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;&#x2007;m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;
+              {/*m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;&#x2007;m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;*/}
             </textPath>
           </text>
         </svg>

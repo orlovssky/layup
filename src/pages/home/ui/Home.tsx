@@ -1,3 +1,4 @@
+import { LocaleToggle } from 'entities/locale'
 import { ThemeToggle } from 'entities/theme'
 import ExpandableMenu from 'features/expandableMenu'
 
@@ -9,6 +10,7 @@ const Home = () => {
       <TopBar />
       <ExpandableMenu>
         <>
+          <LocaleToggle />
           <ThemeToggle />
         </>
       </ExpandableMenu>

@@ -1,10 +1,10 @@
 export default [
   {
-    text: 'NBA',
+    translationNode: 'common.nba',
     link: 'https://www.nba.com/',
   },
   {
-    text: 'FIBA',
+    translationNode: 'common.fiba',
     link: 'https://www.fiba.basketball/',
   },
 ]

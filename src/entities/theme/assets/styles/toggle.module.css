@@ -1,5 +1,6 @@
 .container {
   cursor: var(--cursor-pointer);
+  display: flex;
 }
 
 .sun, .moon {

@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react'
 import toggleClasses from '../assets/styles/toggle.module.css'
 import { MODE } from '../lib/constants/MODE'
 import getMode from '../lib/utils/getMode'
-import { setLocalMode } from '../lib/utils/localStorage'
+import { setLocal } from '../lib/utils/localStorage'
 import toggleMode from '../lib/utils/toggleMode'
 
 gsap.registerPlugin(MorphSVGPlugin)
@@ -26,7 +26,7 @@ const Toggle = () => {
     }
 
     toggleMode()
-    setLocalMode(getMode())
+    setLocal(getMode())
 
     if (tweenRef.current.reversed()) {
       tweenRef.current.restart()
@@ -37,7 +37,8 @@ const Toggle = () => {
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
-      const sun = document.getElementById(idsRef.current.sun)?.firstChild
+      const sun = document.getElementById(idsRef.current.sun)
+        ?.firstChild as SVGPathElement
       const moon = document.getElementById(idsRef.current.moon)
         ?.firstChild as SVGPathElement
 
@@ -50,9 +51,9 @@ const Toggle = () => {
         })
 
         if (getMode() === MODE.DARK) {
-          tweenRef.current.restart()
-        } else {
           tweenRef.current.reverse()
+        } else {
+          tweenRef.current.restart()
         }
       }
     }, containerRef)

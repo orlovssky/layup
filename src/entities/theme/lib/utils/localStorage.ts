@@ -2,7 +2,7 @@ import { MODE } from '../constants/MODE'
 
 const KEY = 'layup-theme-mode'
 
-export const getLocalMode = () => {
+export const getLocal = () => {
   const mode = localStorage.getItem(KEY) as MODE
 
   if (Object.values(MODE).includes(mode)) {
@@ -10,8 +10,6 @@ export const getLocalMode = () => {
   }
 }
 
-export const setLocalMode = (value: MODE) => {
-  if (Object.values(MODE).includes(value)) {
-    localStorage.setItem(KEY, value)
-  }
+export const setLocal = (value: MODE) => {
+  localStorage.setItem(KEY, value)
 }

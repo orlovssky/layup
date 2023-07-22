@@ -1,0 +1,36 @@
+.container {
+  cursor: var(--cursor-pointer);
+}
+
+.en, .ru {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  fill: rgb(var(--color-light));
+}
+
+.show {
+  top: 0;
+  opacity: 0;
+  animation: .15s ease-in .15s forwards show;
+}
+
+@keyframes show {
+  to {
+    top: 26px;
+    opacity: 1;
+  }
+}
+
+.hide {
+  top: 26px;
+  opacity: 1;
+  animation: .15s ease-in forwards hide;
+}
+
+@keyframes hide {
+  to {
+    top: 52px;
+    opacity: 0;
+  }
+}

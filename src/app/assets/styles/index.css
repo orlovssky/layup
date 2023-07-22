@@ -1,4 +1,4 @@
-@import url("./fonts.css");
+@import url("./fonts/sofia-sans.css");
 
 :root {
   --cursor-default: url('../icons/cursors/default.svg'), auto;
@@ -18,13 +18,12 @@
 
   cursor: var(--cursor-default);
 
-  font-family: "Hanken Grotesk", sans-serif;
+  font-family: "Sofia Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
 
   background-color: rgb(var(--color-background));
 }
-
 
 html {
   --color-background: var(--color-light);

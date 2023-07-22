@@ -35,11 +35,12 @@
   width: 90px;
   height: 90px;
   opacity: 0;
-  animation: spin 6s linear infinite, appearance .3s ease-in .2s forwards;
+  animation: 6s linear infinite spin, .3s ease-in .2s forwards appearance;
 }
 
 .text {
   font-size: 1.5em;
+  text-transform: lowercase;
   fill: rgb(var(--color-light))
 }
 
