@@ -1,12 +1,18 @@
 /* https://github.com/lettersoup/Sofia-Sans */
 
-@font-face {
-  font-family: 'Sofia Sans';
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-  src: local('Sofia Sans Light'), local('SofiaSans-Light'), url('../../fonts/SofiaSans/SofiaSans-Light.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Light.ttf') format('truetype');
-}
+/* @font-face { */
+
+/*  font-family: 'Sofia Sans'; */
+
+/*  font-weight: 300; */
+
+/*  font-style: normal; */
+
+/*  font-display: swap; */
+
+/*  src: local('Sofia Sans Light'), local('SofiaSans-Light'), url('../../fonts/SofiaSans/SofiaSans-Light.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Light.ttf') format('truetype'); */
+
+/* } */
 
 @font-face {
   font-family: 'Sofia Sans';
@@ -16,13 +22,19 @@
   src: local('Sofia Sans Regular'), local('SofiaSans-Regular'), url('../../fonts/SofiaSans/SofiaSans-Regular.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Regular.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'Sofia Sans';
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-  src: local('Sofia Sans Medium'), local('SofiaSans-Medium'), url('../../fonts/SofiaSans/SofiaSans-Medium.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Medium.ttf') format('truetype');
-}
+/* @font-face { */
+
+/*  font-family: 'Sofia Sans'; */
+
+/*  font-weight: 500; */
+
+/*  font-style: normal; */
+
+/*  font-display: swap; */
+
+/*  src: local('Sofia Sans Medium'), local('SofiaSans-Medium'), url('../../fonts/SofiaSans/SofiaSans-Medium.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Medium.ttf') format('truetype'); */
+
+/* } */
 
 @font-face {
   font-family: 'Sofia Sans';
@@ -32,10 +44,16 @@
   src: local('Sofia Sans SemiBold'), local('SofiaSans-SemiBold'), url('../../fonts/SofiaSans/SofiaSans-SemiBold.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-SemiBold.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'Sofia Sans';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: local('Sofia Sans Bold'), local('SofiaSans-Bold'), url('../../fonts/SofiaSans/SofiaSans-Bold.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Bold.ttf') format('truetype');
-}
+/* @font-face { */
+
+/*  font-family: 'Sofia Sans'; */
+
+/*  font-weight: 700; */
+
+/*  font-style: normal; */
+
+/*  font-display: swap; */
+
+/*  src: local('Sofia Sans Bold'), local('SofiaSans-Bold'), url('../../fonts/SofiaSans/SofiaSans-Bold.woff2')  format('woff2'), url('../../fonts/SofiaSans/SofiaSans-Bold.ttf') format('truetype'); */
+
+/* } */

@@ -26,10 +26,12 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
 
   for (const letter of [
     ...[...t('common.menu')].map((i) => i + '&#x2007;'),
-    '&#9996;',
+    '&#9775;',
     '&#x2007;',
-    ...[...t('common.menu')].map((i) => i + '&#x2007;'),
-    '&#9996;',
+    '&#9775;',
+    '&#x2007;',
+    '&#9775;',
+    '&#x2007;',
   ]) {
     menuText += letter
   }

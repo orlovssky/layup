@@ -6,7 +6,7 @@ import TopBar from './TopBar'
 
 const Home = () => {
   return (
-    <main>
+    <main style={{ height: '200vh' }}>
       <TopBar />
       <ExpandableMenu>
         <>
