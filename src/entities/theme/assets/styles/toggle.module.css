@@ -1,0 +1,12 @@
+.container {
+  cursor: var(--cursor-pointer);
+}
+
+.sun, .moon {
+  width: 48px;
+  height: 48px;
+}
+
+.moon {
+  width: 0;
+}

@@ -1,5 +1,6 @@
 import { gsap } from 'gsap-trial'
 import { nanoid } from 'nanoid'
+import { PiArrowUpRightBold } from 'react-icons/pi'
 import { forwardRef, useEffect, useRef, useImperativeHandle } from 'react'
 
 import blinkingAnchorClasses from '../assets/styles/blinkingAnchor.module.css'
@@ -19,19 +20,19 @@ const BlinkingAnchor = forwardRef<AnchorRef, Props>(
       blinkOnMount = false,
       blinkOnHover = false,
     },
-    ref
+    ref,
   ) => {
     const anchorRef = useRef<HTMLAnchorElement>(null)
     const lettersRef = useRef(
       [...text].map((letter, letterIndex) => ({
-        id: `${nanoid()}-${-letterIndex}`,
+        id: `${nanoid()}-${letterIndex}`,
         letter,
-      }))
+      })),
     )
     const timelineRef = useRef(
       gsap.timeline({
         paused: !blinkOnMount,
-      })
+      }),
     )
 
     useImperativeHandle(ref, () => ({
@@ -42,7 +43,7 @@ const BlinkingAnchor = forwardRef<AnchorRef, Props>(
       const getDelay = makeGetDelay(delays, delayTick)
       const getOddRepeat = makeGetOddRepeat(repeats, repeatTick)
       const children = gsap.utils.toArray<HTMLSpanElement>(
-        anchorRef.current?.children || null
+        anchorRef.current?.children || null,
       )
 
       const gsapContext = gsap.context(() => {
@@ -57,7 +58,7 @@ const BlinkingAnchor = forwardRef<AnchorRef, Props>(
               repeat: getOddRepeat(),
               delay: getDelay(),
             },
-            0
+            0,
           )
         }
       }, anchorRef)
@@ -83,9 +84,10 @@ const BlinkingAnchor = forwardRef<AnchorRef, Props>(
         {lettersRef.current.map(({ id, letter }) => (
           <span key={id}>{letter}</span>
         ))}
+        <PiArrowUpRightBold className={blinkingAnchorClasses.icon} />
       </a>
     )
-  }
+  },
 )
 
 BlinkingAnchor.displayName = 'BlinkingAnchor'

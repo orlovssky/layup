@@ -20,7 +20,7 @@ export default (repeats: number[], tick: RepeatTick): (() => number) => {
     const randomRepeat = filterableRepeats[randomIndex]
 
     filterableRepeats = filterableRepeats.filter(
-      (filterableRepeat) => filterableRepeat !== randomRepeat
+      (filterableRepeat) => filterableRepeat !== randomRepeat,
     )
 
     return randomRepeat

@@ -1,4 +1,7 @@
 .anchor {
+  display: flex;
+  align-items: center;
+
   padding: 0.2em 1.5em;
 
   font-weight: 600;
@@ -7,16 +10,14 @@
 
   background-color: rgb(var(--color-primary));
 
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-  transition-duration: 1s;
-  transition-property: background-color;
+  transition: background-color .3s ease-in;
 }
 
-body:hover .anchor {
-  background-color: rgb(var(--color-secondary));
+.anchor:hover {
+  background-color: rgb(var(--color-primary-dark));
 }
 
-body .anchor:hover {
-  background-color: rgb(var(--color-primary));
+.icon {
+  margin-left: 0.2rem;
 }
 

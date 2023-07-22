@@ -1,17 +1,17 @@
-import Header from './Header'
-import Letters from './Letters'
+import { ThemeToggle } from 'entities/theme'
+import ExpandableMenu from 'features/expandableMenu'
+
+import TopBar from './TopBar'
 
 const Home = () => {
-  console.log('asdas')
-
   return (
-    <main
-      style={{
-        minHeight: '200vh',
-      }}
-    >
-      <Header />
-      <Letters />
+    <main>
+      <TopBar />
+      <ExpandableMenu>
+        <>
+          <ThemeToggle />
+        </>
+      </ExpandableMenu>
     </main>
   )
 }

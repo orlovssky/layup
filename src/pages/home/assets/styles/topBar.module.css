@@ -1,0 +1,8 @@
+.bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  height: 80px;
+  padding: 1rem 1rem 0;
+}

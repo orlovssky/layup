@@ -1,0 +1,56 @@
+.menu {
+  user-select: none;
+
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+
+  color: rgb(var(--color-light));
+
+  background-color: rgb(var(--color-primary));
+  border-radius: 100px;
+
+  transition: all .3s ease-in;
+}
+
+.expanded {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 60vw;
+}
+
+.expanded > * {
+  opacity: 0;
+  animation: appearance .3s ease-in .2s forwards;
+}
+
+.circle {
+  width: 90px;
+  height: 90px;
+  opacity: 0;
+  animation: spin 6s linear infinite, appearance .3s ease-in .2s forwards;
+}
+
+.text {
+  font-size: 1.5em;
+  fill: rgb(var(--color-light))
+}
+
+@keyframes appearance {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}

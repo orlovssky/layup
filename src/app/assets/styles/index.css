@@ -3,17 +3,18 @@
 :root {
   --cursor-default: url('../icons/cursors/default.svg'), auto;
   --cursor-pointer: url('../icons/cursors/pointer.svg'), auto;
-  --color-light: 236, 248, 249;
-  --color-primary: 229, 88, 7;
-  --color-primary-light: 248, 108, 27;
-  --color-primary-lighter: 249, 132, 65;
-  --color-primary-dark: 191, 73, 6;
-  --color-primary-darker: 153, 59, 5;
-  --color-secondary: 6, 141, 169;
-  --color-secondary-light: 	7, 173, 207;
-  --color-secondary-lighter: 9, 204, 245;
-  --color-secondary-dark: 5, 109, 131;
-  --color-secondary-darker: 3, 78, 93;
+  --color-light: 236 248 249;
+  --color-dark: 9 25 28;
+  --color-cyan: 6 141 169;
+  --color-cyan-light: 7 173 207;
+  --color-cyan-lighter: 9 204 245;
+  --color-cyan-dark: 5 109 131;
+  --color-cyan-darker: 3 78 93;
+  --color-orange: 229 88 7;
+  --color-orange-light: 248 108 27;
+  --color-orange-lighter: 249 132 65;
+  --color-orange-dark: 191 73 6;
+  --color-orange-darker: 153 59 5;
 
   cursor: var(--cursor-default);
 
@@ -21,10 +22,39 @@
   font-weight: 400;
   font-style: normal;
 
-  background-color: rgb(var(--color-light));
+  background-color: rgb(var(--color-background));
 }
 
-a {
+
+html {
+  --color-background: var(--color-light);
+  --color-primary: var(--color-cyan);
+  --color-primary-light: var(--color-cyan-light);
+  --color-primary-lighter: var(--color-cyan-lighter);
+  --color-primary-dark: var(--color-cyan-dark);
+  --color-primary-darker: var(--color-cyan-darker);
+  --color-secondary: var(--color-orange);
+  --color-secondary-light: var(--color-orange-light);
+  --color-secondary-lighter: var(--color-orange-lighter);
+  --color-secondary-dark: var(--color-orange-dark);
+  --color-secondary-darker: var(--color-orange-darker);
+}
+
+html[data-theme='dark'] {
+  --color-background: var(--color-dark);
+  --color-primary: var(--color-orange);
+  --color-primary-light: var(--color-orange-light);
+  --color-primary-lighter: var(--color-orange-lighter);
+  --color-primary-dark: var(--color-orange-dark);
+  --color-primary-darker: var(--color-orange-darker);
+  --color-secondary: var(--color-cyan);
+  --color-secondary-light: var(--color-cyan-light);
+  --color-secondary-lighter: var(--color-cyan-lighter);
+  --color-secondary-dark: var(--color-cyan-dark);
+  --color-secondary-darker: var(--color-cyan-darker);
+}
+
+a, button {
   cursor: var(--cursor-pointer);
 }
 
@@ -33,24 +63,20 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background-color: rgb(var(--color-primary));
+  background-color: rgb(var(--color-orange));
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-secondary));
+  background-color: rgb(var(--color-cyan));
   background-clip: content-box;
   border: 5px solid transparent;
 }
 
-body:hover::-webkit-scrollbar-track {
-  background-color: rgb(var(--color-secondary));
-}
-
-body:hover::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-primary));
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-cyan-light));
 }
 
 body::-webkit-scrollbar-thumb:active {
-  background-color: rgb(var(--color-secondary-dark));
+  background-color: rgb(var(--color-cyan-lighter));
 }
 

@@ -18,7 +18,7 @@ export default (delays: number[], tick: number): (() => number) => {
     const randomDelay = filterableDelays[randomIndex]
 
     filterableDelays = filterableDelays.filter(
-      (filterableDelay) => filterableDelay !== randomDelay
+      (filterableDelay) => filterableDelay !== randomDelay,
     )
 
     return randomDelay

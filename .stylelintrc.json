@@ -4,6 +4,6 @@
     "stylelint-config-clean-order"
   ],
   "rules": {
-    "rule-empty-line-before": "always"
+    "color-function-notation": ["modern", { "ignore": ["with-var-inside"] }]
   }
 }

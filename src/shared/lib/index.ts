@@ -1,1 +1,1 @@
-export { default as throttle } from './utils/throttle'
+export { default as deviceType } from './utils/deviceType'
