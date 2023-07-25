@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import { useTranslation } from 'react-i18next'
+import { useClickAway } from 'react-use'
 import {
   forwardRef,
   useRef,
@@ -7,42 +8,65 @@ import {
   useState,
   useEffect,
 } from 'react'
+import { deviceType } from 'shared/lib'
 
 import expandableMenuClasses from '../assets/styles/expandableMenu.module.css'
 import { ContainerRef, Props } from '../lib/typings/expandableMenu'
 
 const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
   const { t } = useTranslation()
-  const [isExpanded, setIsExpanded] = useState(true)
-  const isMouseOverRef = useRef(false)
+  const [menuText, setMenuText] = useState('')
+  const [isExpanded, setIsExpanded] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const circlePathIDRef = useRef(`${nanoid()}-circle-path`)
+
+  const expand = () => {
+    setIsExpanded(true)
+  }
+
+  const collapse = () => {
+    setIsExpanded(false)
+  }
 
   useImperativeHandle(ref, () => ({
     current: containerRef.current,
   }))
 
-  let menuText = ''
-
-  for (const letter of [
-    ...[...t('common.menu')].map((i) => i + '&#x2007;'),
-    '&#9775;',
-    '&#x2007;',
-    '&#9775;',
-    '&#x2007;',
-    '&#9775;',
-    '&#x2007;',
-  ]) {
-    menuText += letter
-  }
+  useClickAway(containerRef, () => {
+    if (deviceType === 'mobile' && isExpanded) {
+      collapse()
+    }
+  })
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!isMouseOverRef.current) {
-        setIsExpanded(false)
+    const container = containerRef.current
+
+    if (deviceType === 'mobile') {
+      container?.addEventListener('click', expand)
+      window.addEventListener('scroll', collapse)
+
+      return () => {
+        container?.removeEventListener('click', expand)
+        window.removeEventListener('scroll', collapse)
       }
-    }, 2000)
+    } else {
+      container?.addEventListener('mouseenter', expand)
+      container?.addEventListener('mouseleave', collapse)
+
+      return () => {
+        container?.removeEventListener('mouseenter', expand)
+        container?.removeEventListener('mouseleave', collapse)
+      }
+    }
   }, [])
+
+  useEffect(() => {
+    setMenuText(
+      [...t('common.menu'), ...[...Array.from(Array(3)).map(() => '&#9775;')]]
+        .map((letter) => `${letter}&#x2007;`)
+        .join(''),
+    )
+  }, [t])
 
   return (
     <div
@@ -51,17 +75,6 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
         expandableMenuClasses.menu +
         ` ${isExpanded ? expandableMenuClasses.expanded : ''}`
       }
-      onMouseOver={() => {
-        if (!isMouseOverRef.current) {
-          isMouseOverRef.current = true
-        }
-      }}
-      onMouseEnter={() => {
-        setIsExpanded(true)
-      }}
-      onMouseLeave={() => {
-        setIsExpanded(false)
-      }}
     >
       {isExpanded ? (
         children
@@ -88,9 +101,7 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
               dangerouslySetInnerHTML={{
                 __html: menuText,
               }}
-            >
-              {/*m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;&#x2007;m&#x2007;e&#x2007;n&#x2007;u&#x2007;&#9996;*/}
-            </textPath>
+            />
           </text>
         </svg>
       )}

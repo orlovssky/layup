@@ -59,7 +59,7 @@ a, button {
 }
 
 body::-webkit-scrollbar {
-  width: 20px;
+  width: 22px;
 }
 
 body::-webkit-scrollbar-track {
@@ -73,10 +73,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background-color: #B1B1B1;
+  background-color: rgb(var(--color-light) / 75%);
 }
 
 body::-webkit-scrollbar-thumb:active {
-  background-color: rgb(var(--color-light));
+  background-color: rgb(var(--color-light) / 90%);
 }
 
