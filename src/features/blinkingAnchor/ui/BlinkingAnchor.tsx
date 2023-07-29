@@ -1,4 +1,4 @@
-import { gsap } from 'gsap-trial'
+import { gsap } from 'gsap'
 import { nanoid } from 'nanoid'
 import { PiArrowUpRightBold } from 'react-icons/pi'
 import { forwardRef, useEffect, useRef, useImperativeHandle } from 'react'

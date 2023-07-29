@@ -1,0 +1,6 @@
+.letters {
+  width: calc(100vw - 2rem);
+  height: auto;
+  padding: 0 1rem;
+  font-size: 1em;
+}

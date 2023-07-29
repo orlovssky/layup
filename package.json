@@ -12,8 +12,7 @@
     "stylefix": "npx stylelint '**/*.css' --fix"
   },
   "dependencies": {
-    "gsap": "^3.12.2",
-    "gsap-trial": "^3.12.2",
+    "gsap": "npm:@gsap/shockingly",
     "i18next": "^23.2.11",
     "nanoid": "^4.0.2",
     "normalize.css": "^8.0.1",
@@ -21,7 +20,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^13.0.2",
     "react-icons": "^4.10.1",
-    "zustand": "^4.3.9"
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

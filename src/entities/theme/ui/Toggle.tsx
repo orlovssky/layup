@@ -1,5 +1,5 @@
-import { MorphSVGPlugin } from 'gsap-trial/MorphSVGPlugin'
-import { gsap } from 'gsap-trial'
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
+import { gsap } from 'gsap'
 import { nanoid } from 'nanoid'
 import { PiMoonFill, PiSunFill } from 'react-icons/pi'
 import { useEffect, useRef } from 'react'

@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 70vh;
+
+  text-align: center;
+}
+
+.letters {
+  width: auto;
+  height: inherit;
+  padding: 0 10vw;
+  font-size: 1em;
+}
+
+.letter {
+  fill: rgb(var(--color-primary));
+  transition: fill .3s ease-in;
+}
+
+.jordan {
+  pointer-events: none;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  scale: 0;
+
+  display: none;
+
+  color: rgb(var(--color-secondary));
+
+  opacity: 0;
+}
+
+html[data-theme='dark'] .jordan {
+  color: rgb(var(--color-light));
+}

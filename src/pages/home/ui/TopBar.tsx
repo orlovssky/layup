@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { deviceType } from 'shared/lib'
 
 import topBarClasses from '../assets/styles/topBar.module.css'
-import anchors from '../lib/static/anchors'
+import blinkingAnchors from '../lib/static/blinkingAnchors'
 
 const blinkOnHover = deviceType === 'desktop'
 const blinkOnMount = deviceType === 'mobile'
@@ -14,11 +14,11 @@ const TopBar = () => {
 
   return (
     <div className={topBarClasses.bar}>
-      {anchors.map((anchor, anchorIndex) => (
+      {blinkingAnchors.map(({ translationNode, link }, index) => (
         <BlinkingAnchor
-          key={`${nanoid()}-${anchorIndex}`}
-          text={t(anchor.translationNode)}
-          link={anchor.link}
+          key={`${nanoid()}-${index}`}
+          text={t(translationNode)}
+          link={link}
           blinkOnHover={blinkOnHover}
           blinkOnMount={blinkOnMount}
         />
