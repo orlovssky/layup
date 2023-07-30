@@ -33,6 +33,7 @@
   color: rgb(var(--color-secondary));
 
   opacity: 0;
+  z-index: 1;
 }
 
 html[data-theme='dark'] .jordan {

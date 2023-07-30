@@ -100,6 +100,12 @@ const StretchingLetters = () => {
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
+      gsap.fromTo(
+        svgRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1 },
+      )
+
       for (const letter of lettersRef.current[locale]) {
         letter.tween = gsap.fromTo(
           lettersRef.current.map.get(letter.id) || null,

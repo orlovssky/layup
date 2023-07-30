@@ -20,6 +20,11 @@ const StretchingLettersMobile = () => {
 
   useEffect(() => {
     const gsapContext = gsap.context(() => {
+      gsap.fromTo(
+        svgRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1 },
+      )
       const timeline = gsap.timeline({
         yoyo: true,
         repeat: 1,
