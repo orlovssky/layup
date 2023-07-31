@@ -11,6 +11,6 @@ export interface Props {
   blinkOnHover?: boolean
 }
 
-export type AnchorRef = {
+export interface Ref {
   current: HTMLAnchorElement | null
 }

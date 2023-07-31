@@ -4,11 +4,11 @@ import { PiArrowUpRightBold } from 'react-icons/pi'
 import { forwardRef, useEffect, useRef, useImperativeHandle } from 'react'
 
 import blinkingAnchorClasses from '../assets/styles/blinkingAnchor.module.css'
-import { Props, AnchorRef } from '../lib/typings/blinkingAnchor'
+import { Props, Ref } from '../lib/typings/blinkingAnchor'
 import makeGetDelay from '../lib/utils/makeGetDelay'
 import makeGetOddRepeat from '../lib/utils/makeGetOddRepeat'
 
-const BlinkingAnchor = forwardRef<AnchorRef, Props>(
+const BlinkingAnchor = forwardRef<Ref, Props>(
   (
     {
       text,

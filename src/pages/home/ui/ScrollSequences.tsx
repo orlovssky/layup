@@ -14,7 +14,50 @@ const ScrollSequences = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { sequences, count } = useSequencesStore((state) => state)
 
-  return <div ref={containerRef}>{sequences.map((sequence) => sequence)}</div>
+  useEffect(() => {
+    const gsapContext = gsap.context(() => {
+      const canvasContext = canvasRef.current?.getContext('2d')
+
+      if (!canvasContext || !canvasRef.current) {
+        return
+      }
+
+      const frames = { frame: 0 }
+      canvasRef.current.height = sequences[1].height
+      canvasRef.current.width = sequences[1].width
+
+      const handleUpdate = () => {
+        if (canvasRef.current) {
+          const { width, height } = canvasRef.current
+
+          canvasContext.clearRect(0, 0, width, height)
+          canvasContext.drawImage(sequences[frames.frame], 0, 0, width, height)
+        }
+      }
+
+      gsap.to(frames, {
+        frame: count - 1,
+        snap: 'frame',
+        ease: 'none',
+        scrollTrigger: {
+          end: `+=${height}`,
+          scrub: 0.3,
+        },
+        onUpdate: handleUpdate,
+      })
+    }, containerRef)
+
+    return () => {
+      gsapContext.kill()
+    }
+  }, [sequences, count])
+
+  return (
+    <div ref={containerRef}>
+      <canvas ref={canvasRef} className={scrollSequencesClasses.canvas} />
+      <div style={{ height: `${height}px` }} />
+    </div>
+  )
 }
 
 export default ScrollSequences
