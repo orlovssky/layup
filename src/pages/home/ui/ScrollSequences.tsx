@@ -8,13 +8,32 @@ import useSequencesStore from '../model/store/useSequencesStore'
 gsap.registerPlugin(ScrollTrigger)
 
 const height = 5000
+let showed = false
 
 const ScrollSequences = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const tweenRef = useRef<GSAPTween | null>(null)
   const { sequences, count } = useSequencesStore((state) => state)
 
+  const handleWindowResize = () => {
+    if (canvasRef.current) {
+      canvasRef.current.width = window.innerWidth
+      canvasRef.current.height = window.innerHeight
+    }
+  }
+
+  const handleWindowScroll = () => {
+    if (window.scrollY === 0) {
+      tweenRef.current?.reverse()
+      showed = false
+    }
+  }
+
   useEffect(() => {
+    window.addEventListener('resize', handleWindowResize)
+    window.addEventListener('scroll', handleWindowScroll)
+
     const gsapContext = gsap.context(() => {
       const canvasContext = canvasRef.current?.getContext('2d')
 
@@ -22,16 +41,43 @@ const ScrollSequences = () => {
         return
       }
 
+      tweenRef.current = gsap.to(canvasRef.current, {
+        opacity: 1,
+        duration: 0.2,
+        paused: true,
+      })
+
       const frames = { frame: 0 }
-      canvasRef.current.height = sequences[1].height
-      canvasRef.current.width = sequences[1].width
+      canvasRef.current.width = window.innerWidth
+      canvasRef.current.height = window.innerHeight
+      const sequenceWidth = sequences[0].width
+      const sequenceHeight = sequences[0].height
 
       const handleUpdate = () => {
+        if (!showed && window.scrollY !== 0) {
+          showed = true
+          tweenRef.current?.restart()
+        }
+
         if (canvasRef.current) {
           const { width, height } = canvasRef.current
+          const scaleFactor = Math.max(
+            width / sequenceWidth,
+            height / sequenceHeight,
+          )
+          const newWidth = sequenceWidth * scaleFactor
+          const newHeight = sequenceHeight * scaleFactor
+          const x = width / 2 - newWidth / 2
+          const y = height / 2 - newHeight / 2
 
           canvasContext.clearRect(0, 0, width, height)
-          canvasContext.drawImage(sequences[frames.frame], 0, 0, width, height)
+          canvasContext.drawImage(
+            sequences[frames.frame],
+            x,
+            y,
+            newWidth,
+            newHeight,
+          )
         }
       }
 
@@ -41,7 +87,7 @@ const ScrollSequences = () => {
         ease: 'none',
         scrollTrigger: {
           end: `+=${height}`,
-          scrub: 0.3,
+          scrub: 0.2,
         },
         onUpdate: handleUpdate,
       })
@@ -49,6 +95,8 @@ const ScrollSequences = () => {
 
     return () => {
       gsapContext.kill()
+      window.removeEventListener('resize', handleWindowResize)
+      window.removeEventListener('scroll', handleWindowScroll)
     }
   }, [sequences, count])
 

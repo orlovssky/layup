@@ -18,6 +18,10 @@ const StretchingLetters = () => {
   const svgRef = useRef<SVGSVGElement>(null)
   const jordanRef = useRef<SVGSVGElement>(null)
   const lettersRef = useRef<LettersRef>(generateLetters())
+  const animationRef = useRef<{
+    animated: boolean
+    tween: GSAPTween
+  } | null>(null)
 
   const handleMouseMove: MouseEventHandler = (event) => {
     if (!svgRef.current) {
@@ -98,6 +102,18 @@ const StretchingLetters = () => {
     })
   }
 
+  const handleWindowScroll = () => {
+    if (animationRef.current) {
+      if (!animationRef.current.animated) {
+        animationRef.current.animated = true
+        animationRef.current.tween.restart()
+      } else if (window.scrollY === 0) {
+        animationRef.current.animated = false
+        animationRef.current.tween.reverse()
+      }
+    }
+  }
+
   useEffect(() => {
     const gsapContext = gsap.context(() => {
       gsap.fromTo(
@@ -122,6 +138,22 @@ const StretchingLetters = () => {
       gsapContext.kill()
     }
   }, [locale])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleWindowScroll)
+    animationRef.current = {
+      animated: false,
+      tween: gsap.to(svgRef.current, {
+        scale: 0,
+        opacity: 0,
+        paused: true,
+      }),
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleWindowScroll)
+    }
+  }, [])
 
   return (
     <div ref={containerRef} className={stretchingLettersClasses.container}>

@@ -4,6 +4,13 @@
     "stylelint-config-clean-order"
   ],
   "rules": {
-    "color-function-notation": ["modern", { "ignore": ["with-var-inside"] }]
+    "color-function-notation": [
+      "modern", {
+        "ignore": ["with-var-inside"]
+      }],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]+$", {
+      "message": "Expected class selector to be kebab-case"
+    }]
   }
 }
