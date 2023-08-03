@@ -1,0 +1,36 @@
+body {
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: fit-content;
+}
+
+.slide {
+  box-sizing: border-box;
+  width: calc(100vw - 22px);
+  height: 100vh;
+  padding: 4rem;
+
+  color: rgb(var(--color-dark));
+
+  transition: color .3s ease-in;
+}
+
+html[data-theme='dark'] .slide {
+  color: rgb(var(--color-light));
+}
+
+.slide h2 {
+  font-size: 4rem;
+  font-weight: 600;
+  color: rgb(var(--color-primary));
+  transition: color .3s ease-in;
+}
+
+.slide p {
+  font-size: 1rem;
+}

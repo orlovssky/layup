@@ -2,6 +2,7 @@
   user-select: none;
 
   position: fixed;
+  z-index: 999;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
