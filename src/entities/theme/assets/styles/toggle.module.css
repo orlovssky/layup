@@ -1,6 +1,25 @@
 .container {
   cursor: var(--cursor-pointer);
+
   display: flex;
+
+  width: 48px;
+  height: 48px;
+  padding: 1rem;
+
+  background-color: transparent;
+  border-radius: 50%;
+
+  transition: background-color .3s ease-in;
+}
+
+.container:hover {
+  background-color: rgb(var(--color-light) / 15%);
+}
+
+.container:active {
+  background-color: rgb(var(--color-light) / 30%);
+  transition: background-color .1s ease-in;
 }
 
 .sun, .moon {

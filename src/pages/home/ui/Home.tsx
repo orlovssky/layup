@@ -10,6 +10,7 @@ import { deviceType } from 'shared/device'
 import useSequencesStore from '../model/store/useSequencesStore'
 
 import ScrollSequences from './ScrollSequences'
+import SlidesMobile from './SlidesMobile'
 import Slides from './Slides'
 import StretchingLettersMobile from './StretchingLettersMobile'
 import StretchingLetters from './StretchingLetters'
@@ -27,7 +28,7 @@ const Home = () => {
 
     Promise.all(
       Array.from(Array(count)).map(
-        (_, index) => import(`../assets/sequences/jordan_${index}.png`),
+        (_, index) => import(`../assets/sequences/jordan_${index}.webp`),
       ),
     ).then((importedImages) => {
       if (shouldUpdate) {
@@ -66,6 +67,7 @@ const Home = () => {
             <>
               <StretchingLettersMobile />
               <ScrollSequences />
+              <SlidesMobile />
             </>
           ) : (
             <>

@@ -13,7 +13,7 @@ body {
   box-sizing: border-box;
   width: calc(100vw - 22px);
   height: 100vh;
-  padding: 4rem;
+  padding: 1rem;
 
   color: rgb(var(--color-dark));
 
@@ -25,12 +25,80 @@ html[data-theme='dark'] .slide {
 }
 
 .slide h2 {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 600;
   color: rgb(var(--color-primary));
-  transition: color .3s ease-in;
+  transition: all .3s ease-in;
+}
+
+.slide:first-child h2 {
+  font-size: 4rem;
 }
 
 .slide p {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  transition: font-size .3s ease-in;
+}
+
+.slide:first-child p {
+  font-size: 2.5rem;
+}
+
+@media (width >= 640px) {
+  .slide {
+    padding: 2rem;
+  }
+}
+
+@media (width >= 768px) {
+  .slide {
+    padding: 3rem;
+  }
+
+  .slide h2 {
+    font-size: 4rem;
+  }
+
+  .slide:first-child h2 {
+    font-size: 5rem;
+  }
+
+  .slide p {
+    font-size: 1.7rem;
+  }
+
+  .slide:first-child p {
+    font-size: 3rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .slide {
+    padding: 4rem;
+  }
+
+  .slide h2 {
+    font-size: 4.5rem;
+  }
+
+  .slide:first-child h2 {
+    font-size: 6rem;
+  }
+
+  .slide p {
+    font-size: 2rem;
+  }
+
+  .slide:first-child p {
+    font-size: 3.5rem;
+  }
+}
+
+@media (width >= 1536px) {
+  .slide h2,
+  .slide p {
+    max-width: 50vw;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
