@@ -19,6 +19,7 @@ html[data-theme='dark'] .section {
   font-size: 2rem;
   font-weight: 600;
   color: rgb(var(--color-primary));
+  transition: all .3s ease-in;
 }
 
 .section:first-child h2 {
@@ -27,6 +28,7 @@ html[data-theme='dark'] .section {
 
 .section p {
   font-size: 1.3rem;
+  transition: all .3s ease-in;
 }
 
 .section:first-child p {

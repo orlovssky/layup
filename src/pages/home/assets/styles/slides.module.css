@@ -16,8 +16,6 @@ body {
   padding: 1rem;
 
   color: rgb(var(--color-dark));
-
-  transition: color .3s ease-in;
 }
 
 html[data-theme='dark'] .slide {
@@ -37,7 +35,7 @@ html[data-theme='dark'] .slide {
 
 .slide p {
   font-size: 1.5rem;
-  transition: font-size .3s ease-in;
+  transition: all .3s ease-in;
 }
 
 .slide:first-child p {
