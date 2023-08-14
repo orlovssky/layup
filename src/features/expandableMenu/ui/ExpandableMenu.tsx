@@ -62,7 +62,7 @@ const ExpandableMenu = forwardRef<ContainerRef, Props>(({ children }, ref) => {
 
   useEffect(() => {
     setMenuText(
-      [...t('common.menu'), ...[...Array.from(Array(3)).map(() => '&#9775;')]]
+      [...t('common.menu'), ...[...Array.from(Array(3)).map(() => '&#9752;')]]
         .map((letter) => `${letter}&#x2007;`)
         .join(''),
     )
