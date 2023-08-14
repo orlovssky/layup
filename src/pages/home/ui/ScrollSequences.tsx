@@ -98,7 +98,7 @@ const ScrollSequences = () => {
       window.removeEventListener('resize', handleWindowResize)
       window.removeEventListener('scroll', handleWindowScroll)
     }
-  }, [sequences, count])
+  }, [sequences])
 
   return (
     <div ref={containerRef}>

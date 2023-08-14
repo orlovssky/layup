@@ -8,7 +8,7 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { deviceType } from 'shared/lib'
+import { deviceType } from 'shared/device'
 
 import expandableMenuClasses from '../assets/styles/expandableMenu.module.css'
 import { ContainerRef, Props } from '../lib/typings/expandableMenu'

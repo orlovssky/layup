@@ -66,7 +66,7 @@ const BlinkingAnchor = forwardRef<Ref, Props>(
       return () => {
         gsapContext.revert()
       }
-    }, [delays, delayTick, repeats, repeatTick])
+    }, [])
 
     return (
       <a

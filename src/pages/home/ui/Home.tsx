@@ -5,7 +5,7 @@ import FullScreenLoader from 'features/fullScreenLoader'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { gsap } from 'gsap'
 import { useEffect } from 'react'
-import { deviceType } from 'shared/lib'
+import { deviceType } from 'shared/device'
 
 import useSequencesStore from '../model/store/useSequencesStore'
 
@@ -48,7 +48,7 @@ const Home = () => {
     return () => {
       shouldUpdate = false
     }
-  }, [count, setSequences, incrementLoaded, resetLoaded])
+  }, [])
 
   return (
     <main>

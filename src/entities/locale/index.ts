@@ -1,11 +1,11 @@
 export { default as LocaleToggle } from './ui/Toggle'
 
-export { LOCALE } from './lib/constants/LOCALE'
+export { default as LOCALE } from './lib/constants/LOCALE'
 
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import { LOCALE } from './lib/constants/LOCALE'
+import LOCALE from './lib/constants/LOCALE'
 import enTranslation from './lib/static/translations/en.json'
 import ruTranslation from './lib/static/translations/ru.json'
 import { getLocal } from './lib/utils/localStorage'

@@ -1,7 +1,7 @@
 import BlinkingAnchor from 'features/blinkingAnchor'
 import { nanoid } from 'nanoid'
 import { useTranslation } from 'react-i18next'
-import { deviceType } from 'shared/lib'
+import { deviceType } from 'shared/device'
 
 import topBarClasses from '../assets/styles/topBar.module.css'
 import blinkingAnchors from '../lib/static/blinkingAnchors'

@@ -1,4 +1,4 @@
-import { MODE } from '../constants/MODE'
+import MODE from '../constants/MODE'
 
 import getMode from './getMode'
 

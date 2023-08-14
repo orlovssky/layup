@@ -1,6 +1,6 @@
 export { default as ThemeToggle } from './ui/Toggle'
 
-import { MODE } from './lib/constants/MODE'
+import { default as MODE } from './lib/constants/MODE'
 import { getLocal } from './lib/utils/localStorage'
 
 const localMode = getLocal()

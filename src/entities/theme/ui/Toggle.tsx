@@ -5,7 +5,7 @@ import { PiMoonFill, PiSunFill } from 'react-icons/pi'
 import { useEffect, useRef } from 'react'
 
 import toggleClasses from '../assets/styles/toggle.module.css'
-import { MODE } from '../lib/constants/MODE'
+import MODE from '../lib/constants/MODE'
 import getMode from '../lib/utils/getMode'
 import { setLocal } from '../lib/utils/localStorage'
 import toggleMode from '../lib/utils/toggleMode'

@@ -1,15 +1,13 @@
-import { LOCALE } from '../constants/LOCALE'
+import LOCALE from '../constants/LOCALE'
 
 const KEY = 'layup-locale'
 
 export const getLocal = () => {
-  const locale = localStorage.getItem(KEY) as LOCALE
-
-  if (Object.values(LOCALE).includes(locale)) {
-    return locale
-  }
+  return localStorage.getItem(KEY) as LOCALE
 }
 
 export const setLocal = (value: LOCALE) => {
-  localStorage.setItem(KEY, value)
+  if (Object.values(LOCALE).includes(value)) {
+    localStorage.setItem(KEY, value)
+  }
 }

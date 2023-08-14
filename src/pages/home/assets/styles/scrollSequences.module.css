@@ -7,13 +7,3 @@
 
     opacity: 0;
 }
-
-.stretchByHeight {
-    width: auto;
-    height: 100%;
-}
-
-.stretchByWidth {
-    width: 100%;
-    height: auto;
-}

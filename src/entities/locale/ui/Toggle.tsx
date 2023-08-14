@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useRef } from 'react'
 
 import toggleClasses from '../assets/styles/toggle.module.css'
-import { LOCALE } from '../lib/constants/LOCALE'
+import LOCALE from '../lib/constants/LOCALE'
 import { setLocal } from '../lib/utils/localStorage'
 
 const Toggle = () => {
