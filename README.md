@@ -11,6 +11,6 @@
 - [Feature-Sliced Design](https://feature-sliced.design/) - файловая структура
 - [Yarn](https://classic.yarnpkg.com/) - пакетный менеджер
 
-## Author
+## Автор
 
 - [@orlovssky](https://github.com/orlovssky)
